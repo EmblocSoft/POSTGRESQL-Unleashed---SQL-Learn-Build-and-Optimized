@@ -27,7 +27,7 @@ p1.1 & p1.2
 -- To create a new database</br>
 
 CREATE DATABASE my_db; 
-</br></br>
+</br>
 
 p1.3
 </br>

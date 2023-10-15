@@ -25,7 +25,7 @@ p1.1 & p1.2</br>
 -- To create a new database
 CREATE DATABASE my_db; 
 
-</br></br></br>
+</br></br>
 
 p1.3</br>
 CREATE TABLE t1 (i INT, d1 DOUBLE PRECISION , d2 DOUBLE PRECISION);

@@ -8,16 +8,15 @@ The Book is published on Amazon </br>
 
 [https://www.amazon.com/SQL-Certification-Expert-Insights-Practice-ebook/dp/B0CJG5DZ52/ref=sr_1_50?crid=1DFJZY2ZP98Q7&keywords=SQL&qid=1695604933&sprefix=s%2Caps%2C300&sr=8-50](https://www.amazon.com/dp/B0CL2JND72/ref=sr_1_8?keywords=postgresql+16&qid=1697330833&sr=8-8)
 
-</br>
+</br></br>
 
 B. SQL up and running: </br>
 
 For a seamless installation experience, visit the GitHub repository at 
 https://github.com/EmblocSoft/PostgreSQL 
-and download the graphical installer program. This easy-to-use tool will equip you with everything you need to dive into the world of SQL and 
-start building your database skills in no time!
+and download the graphical installer program. This easy-to-use tool will equip you with everything you need to dive into the world of SQL and start building your database skills in no time!
 
-</br>
+</br></br>
 
 C. Practices
 </br>
@@ -111,6 +110,7 @@ CREATE TABLE t2 (
     my_tsvector          TSVECTOR);
 
 </br></br>
+
 p2.1</br>
 INSERT INTO t2 ( my_int,  my_real, my_double)
 VALUES (1, 1.12345678901234567890, 1.123456789012345678901234567890);
@@ -118,86 +118,113 @@ VALUES (1, 1.12345678901234567890, 1.123456789012345678901234567890);
 SELECT my_int, my_real, my_double, my_serial FROM t2 WHERE my_int = 1;
 
 </br></br>
+
 p2.2
 </br>
 INSERT INTO t2 (my_int, my_numeric)
 VALUES (2, 12345678901234567890.12345678901234567890);
 
+</br>
 SELECT my_int, my_numeric, my_smallserial, my_bigserial FROM t2 WHERE my_int = 2;
-</br></br></br>
 
+</br></br>
 
 p2.3</br>
 INSERT INTO t2 (my_int, my_numeric) VALUES (3, 'Infinity');
+
+</br>
 INSERT INTO t2 (my_int, my_numeric) VALUES (4, '-Infinity');
+
+</br>
 INSERT INTO t2 (my_int, my_numeric) VALUES (5, 'NaN');
+
 </br>
 SELECT my_int, my_numeric FROM t2;
+
+</br>
 SELECT 'Infinity'::NUMERIC /  'Infinity'::NUMERIC AS t;
+
+</br>
 SELECT 'Infinity'::NUMERIC /  '-Infinity'::NUMERIC AS t;
 
-</br></br></br>
+</br></br>
 
 p2.4</br>
 INSERT INTO t2 (my_int, my_money)
 VALUES (6, 12345678.912345678901234567890);
 </br>
 SELECT my_int, my_money, my_serial FROM t2 WHERE my_int = 6;
+</br>
 SELECT CURRVAL(pg_get_serial_sequence('t2', 'my_serial'));
 
-</br></br></br>
+</br></br>
 
 p2.5</br>
 SELECT my_int, my_money / 5 AS amount FROM t2 WHERE my_int = 6;
+
+</br>
 SELECT my_int, my_money / 1.5 as amount FROM t2 WHERE my_int = 6;
+
+</br>
 SELECT my_int, (my_money::NUMERIC / 1.5)::MONEY as amount FROM t2 WHERE my_int = 6;
 
-</br></br></br>
+</br></br>
 
 p2.6</br>
 INSERT INTO t2 (my_int, my_char_varying, my_varchar, my_char, my_text)
 VALUES (
 7, 'abcdefghijklmnopqrst', 'abcdefghijklmnopqrst', 
 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstuvwxyz');
+
 </br>
 SELECT my_char_varying, my_varchar, my_char, my_text FROM t2 WHERE my_int =7;
 
-</br></br></br>
+</br></br>
 
 p2.7</br>
 INSERT INTO t2 (my_int, my_char_varying, my_varchar, my_char, my_text)
 VALUES (8, 'abcdefghijklmnopqrst', 'abcdefghijklmnopqrst', 
 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstuvwxyz');
-</br></br>
+
+</br>
 SELECT my_char_varying, my_varchar, my_char, my_text FROM t2 WHERE my_int = 8;
-</br></br>
+
+</br>
 INSERT INTO t2 (my_int, my_char_varying, my_varchar, my_char, my_text)
 VALUES (9, 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstuvwxyz');
+</br>
 (This will return ERROR)
-</br></br>
+
+</br><
 INSERT INTO t2 (my_int, my_char_varying, my_varchar, my_char, my_text)
 VALUES (
 9, 'abcdefghijklmnopqrstuvwxyz'::VARCHAR(20), ' abcdefghijklmnopqrstuvwxyz '::VARCHAR(20), 
 ' abcdefghijklmnopqrstuvwxyz '::CHAR(20), 'abcdefghijklmnopqrstuvwxyz');
-</br></br>
+
+</br>
 SELECT my_char_varying, my_varchar, my_char, my_text FROM t2 WHERE my_int = 9;
 
-</br></br></br>
+</br></br>
 
 p2.8</br>
 INSERT INTO t2 (my_int, my_bytea)
 VALUES (10, E'\\xDEADBEEF');
-</br></br>
+
+</br>
 SELECT my_int, my_bytea FROM t2 WHERE my_int = 10;
-</br></br>
+
+</br>
 SET bytea_output = 'hex';
 SELECT my_int, my_bytea FROM t2 WHERE my_int = 10; -- same SELECT statement
-</br></br>
+
+</br>
 SET bytea_output = 'escape';
+
+</br>
 SELECT my_int, my_bytea FROM t2 WHERE my_int = 10;  -- same SELECT statement
 
+</br></br>
 
-</br></br></br>
 p2.9</br>
 INSERT INTO t2 (
     my_int,
@@ -223,16 +250,18 @@ VALUES (
     TIME '12:34:56',
     TIME '12:34:56+00:00'
 );
-</br></br>
-\x on  
-</br></br>
+
+</br>
+\x on
+
+</br>
 SELECT my_int, my_timestamp_0, my_timestamp_3,my_timestamp_6,
        my_timestamp_tz_0,my_timestamp_tz_3, my_timestamp_tz_6,
        my_date, my_time, my_time_tz
 FROM   t2 
 WHERE  my_int = 11;
-</br></br></br>
 
+</br></br>
 
 p2.10</br>
 INSERT INTO t2 (my_int, my_date, my_time, my_time_tz)
@@ -242,9 +271,11 @@ VALUES (
     'allballs'::TIME,
     'allballs'::TIME WITH TIME ZONE
 );
-</br></br>
+
+</br>
 SELECT my_int, my_date, my_time, my_time_tz FROM t2 WHERE my_int = 12;  
-</br></br>
+
+</br>
 INSERT INTO t2 (
     my_int, 
     my_date,
@@ -257,10 +288,11 @@ VALUES (
     'now'::TIME,
     'now'::TIMESTAMP WITH TIME ZONE
 );
-</br></br>
+
+</br>
 SELECT my_int, my_date, my_time, my_timestamp_tz_0 FROM t2 WHERE my_int = 13;
 
-</br></br></br>
+</br></br>
 
 p2.11</br>
 INSERT INTO t2 (
@@ -281,7 +313,8 @@ VALUES (
     TIMESTAMPTZ '2024-01-01 00:00:00.000+08:00',
     TIMESTAMPTZ '2025-01-01 00:00:00.000000+08:00'
 );
- </br></br>
+
+</br>
 SELECT
      my_int,
      my_timestamp_3 - my_timestamp_0        AS t1_duration,
@@ -290,7 +323,8 @@ SELECT
      my_timestamp_tz_6 - my_timestamp_tz_3  AS t4_duration
 FROM t2
 WHERE my_int = 14;
-</br></br>
+
+</br>
 SELECT
     my_int,
     EXTRACT(EPOCH FROM (my_timestamp_3 - my_timestamp_0))         AS t1_duration,
@@ -302,7 +336,7 @@ SELECT
 FROM t2
 WHERE my_int = 14;
 
-</br></br></br>
+</br></br>
 
 p2.12</br>
 INSERT INTO t2 (

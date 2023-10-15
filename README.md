@@ -321,7 +321,7 @@ SELECT
 FROM t2
 WHERE my_int = 14;
 
-</br>
+</br></br>
 SELECT
     my_int,
     EXTRACT(EPOCH FROM (my_timestamp_3 - my_timestamp_0))         AS t1_duration,

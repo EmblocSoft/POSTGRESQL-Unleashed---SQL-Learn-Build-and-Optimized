@@ -33,7 +33,6 @@ p1.3
 CREATE TABLE t1 (i INT, d1 DOUBLE PRECISION , d2 DOUBLE PRECISION);
 
 </br>
-
 INSERT INTO t1 VALUES 
 (1, 101.40, 31.40), 
 (1, -70.00, 0.00),
@@ -53,7 +52,6 @@ INSERT INTO t1 VALUES
 (6, -51.40, 0.00);
 
 </br>
-
 SELECT i, SUM(d1) AS a, SUM(d2) AS b
 FROM t1 
 GROUP BY i 
@@ -61,7 +59,6 @@ HAVING SUM(d1) <> SUM(d2)
 ORDER BY i;
 
 </br>
-
 SELECT   i, SUM(d1) AS a, SUM(d2) AS b
 FROM     t1 
 GROUP BY i 
@@ -69,8 +66,6 @@ HAVING (ROUND(SUM(d1)::NUMERIC - SUM(d2)::NUMERIC)) <> 0
 ORDER BY i;
 
 </br></br>
-
-
 p2:</br>
 CREATE TABLE t2 (
     my_int               INT, 
@@ -113,17 +108,17 @@ CREATE TABLE t2 (
     my_macaddr8          MACADDR8,
     my_tsvector          TSVECTOR);
 
-</br></br></br>
-
+</br></br>
 p2.1</br>
 INSERT INTO t2 ( my_int,  my_real, my_double)
 VALUES (1, 1.12345678901234567890, 1.123456789012345678901234567890);
-</br></br>
+
+</br>
 SELECT my_int, my_real, my_double, my_serial FROM t2 WHERE my_int = 1;
 
-</br></br></br>
-
-p2.2</br>
+</br></br>
+p2.2
+</br>
 INSERT INTO t2 (my_int, my_numeric)
 VALUES (2, 12345678901234567890.12345678901234567890);
 

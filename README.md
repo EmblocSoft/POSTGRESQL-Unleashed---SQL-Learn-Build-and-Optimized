@@ -8,7 +8,7 @@ The Book is published on Amazon </br>
 
 [https://www.amazon.com/SQL-Certification-Expert-Insights-Practice-ebook/dp/B0CJG5DZ52/ref=sr_1_50?crid=1DFJZY2ZP98Q7&keywords=SQL&qid=1695604933&sprefix=s%2Caps%2C300&sr=8-50](https://www.amazon.com/dp/B0CL2JND72/ref=sr_1_8?keywords=postgresql+16&qid=1697330833&sr=8-8)
 
-</br></br>
+</br>
 
 B. SQL up and running: </br>
 
@@ -17,19 +17,25 @@ https://github.com/EmblocSoft/PostgreSQL
 and download the graphical installer program. This easy-to-use tool will equip you with everything you need to dive into the world of SQL and 
 start building your database skills in no time!
 
-</br></br>
-
-C. Practices</br>
-
-p1.1 & p1.2</br>
--- To create a new database
-CREATE DATABASE my_db; 
-
-</br></br>
-
-p1.3</br>
-CREATE TABLE t1 (i INT, d1 DOUBLE PRECISION , d2 DOUBLE PRECISION);
 </br>
+
+C. Practices
+</br>
+
+p1.1 & p1.2
+</br>
+-- To create a new database</br>
+
+CREATE DATABASE my_db; 
+</br></br>
+
+p1.3
+</br>
+
+CREATE TABLE t1 (i INT, d1 DOUBLE PRECISION , d2 DOUBLE PRECISION);
+
+</br>
+
 INSERT INTO t1 VALUES 
 (1, 101.40, 31.40), 
 (1, -70.00, 0.00),
@@ -47,19 +53,24 @@ INSERT INTO t1 VALUES
 (5, 0.00, 7.20),
 (6, 0.00, 0.00), 
 (6, -51.40, 0.00);
+
 </br>
+
 SELECT i, SUM(d1) AS a, SUM(d2) AS b
 FROM t1 
 GROUP BY i 
 HAVING SUM(d1) <> SUM(d2) 
 ORDER BY i;
+
 </br>
+
 SELECT   i, SUM(d1) AS a, SUM(d2) AS b
 FROM     t1 
 GROUP BY i 
 HAVING (ROUND(SUM(d1)::NUMERIC - SUM(d2)::NUMERIC)) <> 0 
 ORDER BY i;
-</br></br></br>
+
+</br></br>
 
 
 p2:</br>

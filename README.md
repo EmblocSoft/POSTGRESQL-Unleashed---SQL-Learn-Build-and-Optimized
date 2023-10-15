@@ -115,7 +115,6 @@ p2.1</br>
 INSERT INTO t2 ( my_int,  my_real, my_double)
 VALUES (1, 1.12345678901234567890, 1.123456789012345678901234567890);
 
-</br>
 SELECT my_int, my_real, my_double, my_serial FROM t2 WHERE my_int = 1;
 
 </br></br>

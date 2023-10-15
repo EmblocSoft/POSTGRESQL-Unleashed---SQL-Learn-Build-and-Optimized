@@ -25,7 +25,6 @@ C. Practices
 p1.1 & p1.2
 </br>
 -- To create a new database</br>
-
 CREATE DATABASE my_db; 
 </br>
 

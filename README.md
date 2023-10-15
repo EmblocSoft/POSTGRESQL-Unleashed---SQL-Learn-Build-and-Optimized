@@ -511,17 +511,17 @@ VALUES (
     to_json('{"title": "SQL Certification"}'::json)
 );
 
-</br>
+</br></br>
 SELECT
    my_int,
    my_json #> '{title}' AS title
 FROM t2
 WHERE my_int = 18;
 
-</br>
+</br></br>
 SELECT array_to_json('{{1,5},{99,100}}'::int[]) AS checked;
 
-</br>
+</br></br>
 INSERT INTO t2 (my_int, my_jsonb)
 VALUES (
     19,
@@ -532,7 +532,7 @@ VALUES (
     )
 );
 
-</br>
+</br></br>
 SELECT
    my_int,
    my_jsonb #> '{title}' AS title,
@@ -549,7 +549,7 @@ SELECT
 FROM t2 
 WHERE my_int = 19;
 
-</br>
+</br></br>
 INSERT INTO t2 (my_int, my_jsonb)
 VALUES (
     20,
@@ -560,7 +560,7 @@ VALUES (
     )
 );
 
-</br>
+</br></br>
 SELECT 
    my_int, my_jsonb
 FROM t2 
@@ -574,14 +574,14 @@ SELECT
 FROM t2 
 WHERE my_int = 20;
 
-</br>
+</br></br>
 INSERT INTO t2 (my_int, my_jsonb)
 VALUES (
     21,
     to_jsonb('{"title": "DBA Guidebook", "author": "Moss", "published_year": 2023}'::jsonb)
 );
 
-</br>
+</br></br>
 SELECT
    my_int,
    my_jsonb->>'title' AS title,
@@ -590,7 +590,7 @@ SELECT
 FROM t2
 WHERE my_int = 21;
 
-</br>
+</br></br>
 INSERT INTO t2 (my_int, my_jsonb)
 VALUES (
   22,
@@ -600,7 +600,7 @@ VALUES (
   )
 );
 
-</br>
+</br></br>
 SELECT
    my_int,
    (my_jsonb #> '{0,title}') AS title,
@@ -609,7 +609,7 @@ SELECT
 FROM t2
 WHERE my_int = 22;
 
-</br>
+</br></br>
 INSERT INTO t2 (my_int, my_jsonb)
 VALUES (
   23,
@@ -618,7 +618,7 @@ VALUES (
     )
 );
 
-</br>
+</br></br>
 SELECT
    my_int,
    my_jsonb->>'title' AS title,
@@ -627,7 +627,7 @@ SELECT
 FROM t2
 WHERE my_int = 23;
 
-</br>
+</br></br>
 INSERT INTO t2 (my_int, my_jsonb)
 VALUES (
     24,
@@ -637,7 +637,7 @@ VALUES (
     )::jsonb
 );
 
-</br>
+</br></br>
 SELECT
    my_int,
    my_jsonb->>'title' AS title,

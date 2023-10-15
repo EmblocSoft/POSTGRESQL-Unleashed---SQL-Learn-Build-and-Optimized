@@ -152,8 +152,10 @@ SELECT 'Infinity'::NUMERIC /  '-Infinity'::NUMERIC AS t;
 p2.4</br>
 INSERT INTO t2 (my_int, my_money)
 VALUES (6, 12345678.912345678901234567890);
+
 </br>
 SELECT my_int, my_money, my_serial FROM t2 WHERE my_int = 6;
+
 </br>
 SELECT CURRVAL(pg_get_serial_sequence('t2', 'my_serial'));
 
@@ -195,7 +197,7 @@ VALUES (9, 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqr
 </br>
 (This will return ERROR)
 
-</br><
+</br>
 INSERT INTO t2 (my_int, my_char_varying, my_varchar, my_char, my_text)
 VALUES (
 9, 'abcdefghijklmnopqrstuvwxyz'::VARCHAR(20), ' abcdefghijklmnopqrstuvwxyz '::VARCHAR(20), 

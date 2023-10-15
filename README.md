@@ -174,9 +174,7 @@ SELECT my_int, (my_money::NUMERIC / 1.5)::MONEY as amount FROM t2 WHERE my_int =
 
 p2.6</br>
 INSERT INTO t2 (my_int, my_char_varying, my_varchar, my_char, my_text)
-VALUES (
-7, 'abcdefghijklmnopqrst', 'abcdefghijklmnopqrst', 
-'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstuvwxyz');
+VALUES (7, 'abcdefghijklmnopqrst', 'abcdefghijklmnopqrst', 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstuvwxyz');
 
 </br>
 SELECT my_char_varying, my_varchar, my_char, my_text FROM t2 WHERE my_int =7;
@@ -185,23 +183,20 @@ SELECT my_char_varying, my_varchar, my_char, my_text FROM t2 WHERE my_int =7;
 
 p2.7</br>
 INSERT INTO t2 (my_int, my_char_varying, my_varchar, my_char, my_text)
-VALUES (8, 'abcdefghijklmnopqrst', 'abcdefghijklmnopqrst', 
-'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstuvwxyz');
+VALUES (8, 'abcdefghijklmnopqrst', 'abcdefghijklmnopqrst', 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstuvwxyz');
 
 </br>
 SELECT my_char_varying, my_varchar, my_char, my_text FROM t2 WHERE my_int = 8;
 
 </br>
 INSERT INTO t2 (my_int, my_char_varying, my_varchar, my_char, my_text)
-VALUES (9, 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstuvwxyz');
+VALUES (9, 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstu', 'abcdefghijklmnopqrstu','abcdefghijklmnopqrstuvwxyz');
 </br>
 (This will return ERROR)
 
 </br>
 INSERT INTO t2 (my_int, my_char_varying, my_varchar, my_char, my_text)
-VALUES (
-9, 'abcdefghijklmnopqrstuvwxyz'::VARCHAR(20), ' abcdefghijklmnopqrstuvwxyz '::VARCHAR(20), 
-' abcdefghijklmnopqrstuvwxyz '::CHAR(20), 'abcdefghijklmnopqrstuvwxyz');
+VALUES (9, 'abcdefghijklmnopqrstuvwxyz'::VARCHAR(20), ' abcdefghijklmnopqrstuvwxyz '::VARCHAR(20), 'abcdefghijklmnopqrstuvwxyz '::CHAR(20), 'abcdefghijklmnopqrstuvwxyz');
 
 </br>
 SELECT my_char_varying, my_varchar, my_char, my_text FROM t2 WHERE my_int = 9;
@@ -774,58 +769,73 @@ WHERE my_tstzrange  @> '2023-08-03'::TIMESTAMP WITH TIME ZONE;
 p2.24</br>
 INSERT INTO t5 (my_int, my_int4range, my_varchar, my_value)
 VALUES (11, '[0, 1)', 'New Born', 50000);
-</br></br>
+
+</br>
 INSERT INTO t5 (my_int, my_int4range, my_varchar, my_value)
 VALUES (12, '[1, 7)', 'Kid', 100000);
-</br></br>
+
+</br>
 INSERT INTO t5 (my_int, my_int4range, my_varchar, my_value)
 VALUES (13, '[7, 18)', 'Young', 150000);
-</br></br>
+
+</br>
 INSERT INTO t5 (my_int, my_int4range, my_varchar, my_value)
 VALUES (14, '[18, 60)', 'Adult', 200000);
-</br></br>
+
+</br>
 INSERT INTO t5 (my_int, my_int4range, my_varchar, my_value)
 VALUES (15, '[60, 150)', 'Old', 250000);
-</br></br>
+
+</br>
 SELECT my_varchar, my_value FROM t5 WHERE my_int4range @> 18;
-</br></br>
+
+</br>
 INSERT INTO t5 (my_int, my_numrange, my_varchar, my_value)
 VALUES (21, '[0.00, 50.00)', 'Low Price Range', 0.05);
-</br></br>
+
+</br>
 INSERT INTO t5 (my_int, my_numrange, my_varchar, my_value)
 VALUES (22, '[50.00, 150.00)', 'Mid Price Range', 0.08);
-</br></br>
+
+</br>
 INSERT INTO t5 (my_int, my_numrange, my_varchar, my_value)
 VALUES (23, '[150.00, 1000]', 'High Price Range', 0.10);
-</br></br>
+
+</br>
 SELECT my_varchar, my_numrange, my_value AS extra_discount FROM t5
 WHERE my_numrange @> '50'::NUMERIC;
-</br></br>
+
+</br>
 SELECT my_varchar, my_numrange, my_value AS extra_discount FROM t5
 WHERE my_numrange @> '49.99999'::NUMERIC;
-</br></br>
+
+</br>
 SELECT my_varchar, my_numrange, my_value AS extra_discount FROM t5
 WHERE my_numrange @> '150.00'::NUMERIC;
 
-</br></br></br>
+</br></br>
 
 p2.25</br>
 INSERT INTO t2 (my_int, my_uuid, my_varchar)
 VALUES (26, 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Data validation Job');
-</br></br>
+
+</br>
 INSERT INTO t2 (my_int, my_inet, my_varchar)
 VALUES (27, '192.168.0.1', 'Database server IP');
-</br></br>
+
+</br>
 INSERT INTO t2 (my_int, my_cidr, my_varchar)
 VALUES (28, '192.168.0.0/24', 'CIDR Range');
-</br></br>
+
+</br>
 INSERT INTO t2 (my_int, my_macaddr, my_varchar)
 VALUES (29, '08:00:2b:01:02:03', 'MAC Address');
-</br></br>
+
+</br>
 INSERT INTO t2 (my_int, my_macaddr8, my_varchar)
 VALUES (30, '08:00:2b:01:02:03:04:05', 'MAC Address 8'); 
 
-</br></br></br>
+</br></br>
 
 p2.26</br>
 INSERT INTO t2 (my_int, my_text, my_tsvector)
@@ -834,56 +844,59 @@ VALUES (
    'Using dedicated data types for UUID, CIDR, INET, MACADDR, and MACADDR8 can lead to better data management', 
    to_tsvector('english', 'Using dedicated data types for UUID, CIDR, INET, MACADDR, and MACADDR8 can lead to better data management')
 );
-</br></br>
+
+</br>
 INSERT INTO t2 (my_int, my_text, my_tsvector)
 VALUES (
    32, 
-   'As database systems evolve, they can introduce optimizations and enhancements specific to these data types. Storing the data in dedicated columns will allow you to take advantage of such improvements without needing to change your data model.', 
-   to_tsvector('english', 'As database systems evolve, they can introduce optimizations and enhancements specific to these data types. Storing the data in dedicated columns will allow you to take advantage of such improvements without needing to change your data model.')
+   'As database systems evolve, they can introduce optimizations and enhancements specific to these data types. Storing the data in dedicated columns will allow you to take advantage of such improvements without needing to change your data model.', to_tsvector('english', 'As database systems evolve, they can introduce optimizations and enhancements specific to these data types. Storing the data in dedicated columns will allow you to take advantage of such improvements without needing to change your data model.')
 );
-</br></br>
+
+</br>
 INSERT INTO t2 (my_int, my_text, my_tsvector)
 VALUES (
-   33, 
-   ' Storing MAC addresses alongside network configuration settings for various devices to ensure proper configuration and connectivity.', 
-   to_tsvector('english', 'Storing MAC addresses alongside network configuration settings for various devices to ensure proper configuration and connectivity.'));
-</br></br>
+   33, 'Storing MAC addresses alongside network configuration settings for various devices to ensure proper configuration and connectivity.', to_tsvector('english', 'Storing MAC addresses alongside network configuration settings for various devices to ensure proper configuration and connectivity.'));
+
+</br>
 SELECT my_text, my_tsvector FROM t2 WHERE my_int =31;
-</br></br>
+
+</br>
 SELECT my_int, my_text
 FROM t2
 WHERE my_tsvector @@ to_tsquery('english', 'data & types')
 ORDER BY ts_rank_cd(my_tsvector, to_tsquery('english', 'better & data')) DESC;
-</br></br>
+
+</br>
 SELECT my_int, my_text
 FROM t2
 WHERE my_tsvector @@ to_tsquery('english', 'data & types')
 ORDER BY ts_rank_cd(my_tsvector, to_tsquery('english', ' improvements & enhancements')) DESC;
-</br></br></br>
 
+</br></br>
 
 p3.</br>
 CREATE DATABASE about_x;
-</br></br>
-\l
-</br></br>
-\c about_x
-</br></br>
+
+</br>
 CREATE SCHEMA car;
-</br></br>
+
+</br>
 CREATE SCHEMA space;
-</br></br>
+
+</br>
 CREATE SCHEMA common;
+
 </br></br>
-\dn
-</br></br></br>
 
 
 p3.1</br>
 -- Create the ENUM about allowed values of title
+</br>
 CREATE TYPE ENUM_TITLE AS ENUM ('Mr.', 'Ms.', 'Mrs.', 'Dr.', 'Prof.');
-</br></br>
+
+</br>
 -- Create the Shareholder table under the common schema
+</br>
 CREATE TABLE common.shareholder (
     shareholder_id VARCHAR(10) PRIMARY KEY,
     title       ENUM_TITLE,
@@ -900,8 +913,10 @@ CREATE TABLE common.shareholder (
     country     VARCHAR(30) NOT NULL,
     postal_code VARCHAR(8) NOT NULL
 );
-</br></br>
+
+</br>
 -- Create indexes
+</br>
 CREATE INDEX shareholder_idx_01 ON common.shareholder (shareholder_id);
 CREATE INDEX shareholder_idx_02 ON common.shareholder (first_name, last_name, shareholder_id);
 </br></br>
@@ -916,10 +931,11 @@ VALUES(
  'Mr.', 'Elon', 'Reeve', 'Musk','Elon.musk@x.com', '+1-010101010101',
  'Unit 1 X Corp Building', NULL, NULL, NULL, 'Los Angeles', 'USA', '912345');
 
-</br></br></br>
+</br></br>
 
 p3.2</br>
 -- Create the Shareholder Registry table under the common schema
+</br>
 CREATE TABLE common.shareholder_registry (
     company        VARCHAR(50) NOT NULL,
     shareholder_id VARCHAR(10) NOT NULL,
@@ -927,31 +943,39 @@ CREATE TABLE common.shareholder_registry (
     PRIMARY KEY (shareholder_id, company),
     FOREIGN KEY (shareholder_id) REFERENCES common.shareholder (shareholder_id)
 );
-</br></br>
+
+</br>
 -- Create index
+</br>
 CREATE INDEX share_reg_idx_01 ON common.shareholder_registry (company, shareholder_id);
-</br></br>
+
+</br>
 -- Insert sample data
+</br>
 INSERT INTO common.shareholder_registry (
  company, shareholder_id, shares)
 VALUES ('xSpace Inc', 'S000000001', 100000000);
-</br></br>
+
+</br>
 INSERT INTO common.shareholder_registry (
  company, shareholder_id, shares)
 VALUES ('E Car Inc', 'S000000001', 200000000);
-</br></br>
+
+</br>
 INSERT INTO common.shareholder_registry (
  company, shareholder_id, shares)
 VALUES ('X Inc', 'S000000001', 300000000);
-</br></br>
+
+</br>
 SELECT s.title, s.first_name, s.last_name, sr.shares
 FROM common.shareholder s
 JOIN common.shareholder_registry sr ON s.shareholder_id = sr.shareholder_id;
-</br></br></br>
 
+</br></br>
 
 p3.3</br>
 -- Create the xSpace Travel Schedule table under the space schema
+</br>
 CREATE TABLE space.space_travel_schedule (
     trip_id        VARCHAR(10) PRIMARY KEY,
     destination    VARCHAR(100) NOT NULL,
@@ -960,24 +984,30 @@ CREATE TABLE space.space_travel_schedule (
     return_dtm     TIMESTAMP(0) NOT NULL,
     price          MONEY NOT NULL
 );
-</br></br>
+
+</br>
 -- Create indexes
+</br>
 CREATE INDEX space_idx_01 ON space.space_travel_schedule (trip_id);
-</br></br>
+
+</br>
 CREATE INDEX space_idx_02 ON space.space_travel_schedule (destination, trip_id);
-</br></br>
+
+</br>
 -- Insert sample data
+</br>
 INSERT INTO space.space_travel_schedule (
  trip_id, destination, departure_from,
  departure_dtm, return_dtm, price)
 VALUES (
  'S000000001', 'Moon', 'Los Angeles, USA',
  '2024-12-31 23:59:59', '2025-01-31 00:00:00', 1000000.00);
-</br></br></br>
 
+</br></br>
 
 p3.4</br>
 -- Create the Customer table under the car schema
+</br>
 CREATE TABLE car.customer (	 
     customer_id VARCHAR(20) PRIMARY KEY,
     title       ENUM_TITLE,
@@ -995,11 +1025,15 @@ CREATE TABLE car.customer (
     postal_code VARCHAR(8),
     tweeter_account_id VARCHAR(64)
 );
-</br></br>
+
+</br>
 -- Create index
+</br>
 CREATE INDEX customer_idx_01 ON car.customer (customer_id);
-</br></br>
+
+</br>
 -- Insert sample data
+</br>
 INSERT INTO car.customer (
  customer_id, title, first_name, middle_name, last_name,
  email, phone,  
@@ -1013,10 +1047,11 @@ VALUES (
  'Los Angeles', 'USA', '923456',
  '@thomassbright');
 
-</br></br></br>
+</br></br>
 
 p3.5</br>
 -- Create the Space Trip table under the space schema
+</br>
 CREATE TABLE space.space_trip (
     trip_id     VARCHAR(10) PRIMARY KEY,
     customer_id VARCHAR(10) NOT NULL,
@@ -1024,68 +1059,87 @@ CREATE TABLE space.space_trip (
     amount_paid MONEY NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES car.customer(customer_id)
 );
-</br></br>
+
+</br>
 -- Create indexes
+</br>
 CREATE INDEX trip_idx_01 ON space.space_trip (trip_id, customer_id);
-</br></br>
+
+</br>
 CREATE INDEX trip_idx_02 ON space.space_trip (customer_id, trip_id);
-</br></br>
+
+</br>
 -- Insert sample data
+</br>
 INSERT INTO space.space_trip (trip_id, customer_id, fee, amount_paid)
 VALUES ('S000000001', 'C230000001', '1,000,000.00', '900,000.00');
-</br></br>
+
+</br>
 SELECT st.trip_id, sch.destination, sch.departure_dtm,
        c.first_name, c.last_name, 
        st.amount_paid
 FROM space.space_trip st
 JOIN car.customer c ON st.customer_id = c.customer_id
 JOIN space.space_travel_schedule sch ON st.trip_id = sch.trip_id;
-</br></br></br>
 
+</br></br>
 
 p3.6</br>
 -- Create the Product Category table under the car schema
+</br>
 CREATE TABLE car.category (
     category_id VARCHAR(20) PRIMARY KEY,
     description TEXT NOT NULL
 );
-</br></br>
+
+</br>
 -- Create the Product Category table under the car schema
+</br>
 CREATE TABLE car.category (
     category_id VARCHAR(20) PRIMARY KEY,
     description TEXT NOT NULL
 );
-</br></br>
+
+</br>
 -- Create index
+</br>
 CREATE INDEX category_idx_01 ON car.category (category_id);
-</br></br>
+
+</br>
 -- Insert sample data
+</br>
 INSERT INTO car.category (category_id, description)
 VALUES ('CT000001', 'Advanced model');
 
-</br></br></br>
+</br></br>
 
 p3.7</br>
 -- Create the Category Designer table under the car schema
+</br>
 CREATE TABLE car.category_designer (
     category_id VARCHAR(20) REFERENCES car.category (category_id),
     designer    VARCHAR(50) NOT NULL,
     PRIMARY KEY (category_id, designer)
 );
-</br></br>
+
+</br>
 -- PRIMARY KEY (category_id, designer):  specifies that the combination of the category_id and designer columns will be the primary key
+</br>
 CREATE INDEX category_designer_idx_01 ON car.category_designer (category_id, designer);
-</br></br>
+
+</br>
 INSERT INTO car.category_designer (category_id, designer)
 VALUES ('CT000001', 'Arthur');
-</br></br>
+
+</br>
 INSERT INTO car.category_designer (category_id, designer)
 VALUES ('CT000001', 'Antonia');
 
-</br></br></br>
+</br></br>
 
 p3.8</br>
 -- Create the Product table under the car schema
+</br>
 CREATE TABLE car.product (
     product_id   VARCHAR(20) PRIMARY KEY,
     product_name TEXT NOT NULL,
@@ -1096,22 +1150,32 @@ CREATE TABLE car.product (
     price        MONEY NOT NULL,
     FOREIGN KEY (category_id) REFERENCES car.category(category_id)
 );
-</br></br>
+
+</br>
 -- Create indexes
+</br>
 CREATE INDEX product_idx_01 ON car.product (product_id);
+
+</br>
 CREATE INDEX product_idx_02 ON car.product (category_id, product_id);
+
+</br>
 CREATE INDEX product_idx_03 ON car.product (origin, product_id);
-</br></br>
+
+</br>
 -- Insert sample data
+</br>
 INSERT INTO car.product (
  product_id, product_name, sku, origin, color,
  category_id, price)
 VALUES (
  'P00000001', 'Model K', 'S0001-20841-2233-331', 'USA', 'Black',
  'CT000001', 39999.99);
-</br></br>
+
+</br>
 SELECT category_id, designer FROM car.category_designer;
-</br></br>
+
+</br>
 SELECT
     p.product_id,
     p.product_name,
@@ -1124,7 +1188,8 @@ FROM car.product p
 JOIN car.category c ON p.category_id = c.category_id
 JOIN car.category_designer cd ON p.category_id = cd.category_id
 GROUP BY p.product_id, p.product_name, p.price, p.sku, p.category_id, c.description;
-</br></br>
+
+</br>
 SELECT
     p.product_id,
     p.product_name,
@@ -1141,6 +1206,7 @@ JOIN car.category_designer cd ON p.category_id = cd.category_id;
 
 p3.9</br>
 -- Create the Order Header table under the car schema
+</br>
 CREATE TABLE car.order_header (
     order_no           VARCHAR(20) NOT NULL,
     customer_id        VARCHAR(20) REFERENCES car.customer (customer_id),
@@ -1153,11 +1219,14 @@ CREATE TABLE car.order_header (
     order_net_total    MONEY,
     PRIMARY KEY (order_no, customer_id)
 );
-</br></br>
+
+</br>
 -- Create index
 CREATE INDEX order_header_idx_01 ON car.order_header (order_no, customer_id);
-</br></br>
+
+</br>
 -- Insert sample data
+</br>
 INSERT INTO car.order_header (
     order_no, customer_id, order_dtm, delivery_address_1, 
     discount_rate, order_net_total)
@@ -1165,10 +1234,11 @@ VALUES (
    'OR2023000001', 'C230000001', '2023-08-03 12:00:00', '123 Main St', 
    0.10, 71999.98);
 
-</br></br></br>
+</br></br>
 
 p3.10</br>
 -- Create the Order Detail table under the car schema
+</br>
 CREATE TABLE car.order_detail (
     order_no   VARCHAR(20) NOT NULL,
     product_id VARCHAR(20) REFERENCES car.product (product_id),
@@ -1177,22 +1247,27 @@ CREATE TABLE car.order_detail (
     amount     NUMERIC(15,2),
     PRIMARY KEY (order_no, product_id)
 );
-</br></br>
+
+</br>
 -- Create index
+</br>
 CREATE INDEX order_detail_idx_01 ON car.order_detail (order_no, product_id);
-</br></br>
+
+</br>
 -- Insert sample data
+</br>
 INSERT INTO car.order_detail (order_no, product_id, qty, unit_price, amount)
 VALUES ('OR2023000001', 'P00000001', 2, 39999.99, 79999.98);
-</br></br>
 
+</br></br>
 
 p3.11</br>
 ALTER TABLE car.customer
 ADD CONSTRAINT customer_tweeter_account_id_unique UNIQUE (tweeter_account_id);
-</br></br>
 
+</br>
 -- Create the Tweets table under the car schema
+</br>
 CREATE TABLE car.tweet (
     tweet_message_id   VARCHAR(64) PRIMARY KEY,
     tweeter_account_id VARCHAR(64) REFERENCES car.customer(tweeter_account_id),
@@ -1202,11 +1277,15 @@ CREATE TABLE car.tweet (
     video              VARCHAR(100),
     url                VARCHAR(100)
 );
-</br></br>
+
+</br>
 -- Create index
+</br>
 CREATE INDEX tweet_idx_01 ON car.tweet (tweet_message_id, tweeter_account_id);
-</br></br>
+
+</br>
 -- Insert sample data
+</br>
 INSERT INTO car.tweet (
  tweet_message_id, tweeter_account_id, 
  content, 
@@ -1216,110 +1295,121 @@ VALUES (
  'Excited to share our latest electric car model!', 
  '2023-08-03 12:00:00.000000', NULL, NULL, NULL);
 
-</br></br></br>
+</br></br>
 
 p4.</br>
 --Connect to your new database, about_x
+</br>
 \c about_x
-</br></br>
+
+</br>
 CREATE TABLE t6 (
     id INT PRIMARY KEY,
     name VARCHAR(50),
     description VARCHAR(100)
 );
-</br></br>
+
+</br>
 CREATE TABLE t7 (
     id INT PRIMARY KEY,
     t6_id INT,
     details VARCHAR(200),
     FOREIGN KEY (t6_id) REFERENCES t6(id)
 );
-</br></br>
+
+</br>
 INSERT INTO t6 (id, name, description)
 VALUES (1, 'Item A', 'Description for Item A'),
        (2, 'Item B', 'Description for Item B'),
        (3, 'Item C', 'Description for Item C'),
        (4, 'Item D', 'Description for Item D'),
        (5, 'Item E', 'Description for Item E');
-</br></br>
+
+</br>
 INSERT INTO t7 (id, t6_id, details)
 VALUES (1, 1, 'Details for Item A'),
        (2, 2, 'Details for Item B'),
        (3, 1, 'Details for Item A'),
        (4, 3, 'Details for Item C'),
        (5, 2, 'Details for Item B');
-</br></br>
-\dt
-</br></br></br>
 
+</br></br>
 
 p4.1</br>
 --Connect to your new database, about_x
+</br>
 \c about_x
-</br></br>
+
+</br>
 ALTER TABLE t6
 ADD COLUMN new_column VARCHAR(50);
-</br></br>
+
+</br>
 INSERT INTO t6 (id, name, description, new_column)
 VALUES (6, 'Item F', 'Description for Item F', '600'),
        (7, 'Item G', 'Description for Item G', '700'),
        (8, 'Item H', 'Description for Item H', '800');
-</br></br>
-\d t7
-</br></br>
+
+</br>
 ALTER TABLE t6
 ALTER COLUMN new_column SET DATA TYPE INT USING new_column::INT;
-</br></br>
+
+</br>
 ALTER TABLE t6
 RENAME COLUMN new_column TO new_int;
-</br></br>
-\d t6
-</br></br>
-SELECT * FROM t6;
-</br></br></br>
 
+</br>
+SELECT * FROM t6;
+
+</br></br>
 
 p4.2</br>
 \c about_x
-</br></br>
+
+</br>
 DROP TABLE t6;
 
-</br></br></br>
+</br></br>
 
 p4.3</br>
 \c about_x
-</br></br>
-DROP TABLE t6 CASCADE;
-</br></br>
-\d t7
 
-</br></br></br>
+</br>
+DROP TABLE t6 CASCADE;
+
+</br></br>
 
 p4.4</br>
 --Connect to database about_x
 </br>
 \c about_x
-</br></br>
+
+</br>
 --Create a new index set the order by publish date, then by account by message 
 </br>
 CREATE INDEX CONCURRENTLY tweet_idx_02 ON car.tweet (publish_dtm, tweeter_account_id, tweet_message_id);
-</br></br></br>
 
+</br></br>
 
 p4.5</br>
 ALTER INDEX car.tweet_idx_02 RENAME TO tweet_idx_02a;
-</br></br>
+
+</br>
 -- Drop the existing index</br>
+</br>
 DROP INDEX car.tweet_idx_02a;
-</br></br>
+
+</br>
 -- Create a new index with additional columns</br>
+</br>
 CREATE INDEX CONCURRENTLY tweet_idx_02 ON car.tweet (publish_dtm, tweet_message_id, tweeter_account_id);
 
-</br></br></br>
+</br></br>
 
 p4.6</br>
 \c about_x
-</br></br>
+
+</br>
 CREATE VIEW space_trip_details AS
 SELECT st.trip_id, sch.destination, sch.departure_dtm,
        c.first_name, c.last_name, 
@@ -1327,12 +1417,16 @@ SELECT st.trip_id, sch.destination, sch.departure_dtm,
 FROM space.space_trip st
 JOIN car.customer c ON st.customer_id = c.customer_id
 JOIN space.space_travel_schedule sch ON st.trip_id = sch.trip_id;
-</br></br>
+
+</br>
 SELECT * FROM space_trip_details LIMIT 1;
-</br></br>
+
+</br>
 --Add new column to view: drop the view and create view again</br>
+</br>
 DROP VIEW space_trip_details;
-</br></br>
+
+</br>
 CREATE VIEW space_trip_details AS
 SELECT st.trip_id, sch.destination, sch.departure_dtm, sch.return_dtm,
        c.first_name, c.last_name,
@@ -1340,28 +1434,36 @@ SELECT st.trip_id, sch.destination, sch.departure_dtm, sch.return_dtm,
 FROM space.space_trip st
 JOIN car.customer c ON st.customer_id = c.customer_id
 JOIN space.space_travel_schedule sch ON st.trip_id = sch.trip_id;
-</br></br>
-SELECT * FROM space_trip_details LIMIT 1;
-</br></br>
-DROP VIEW space_trip_details;
-</br></br></br>
 
+</br>
+SELECT * FROM space_trip_details LIMIT 1;
+
+</br>
+DROP VIEW space_trip_details;
+
+</br></br>
 
 p4.7</br>
 -- Order number column</br>
+</br>
 COMMENT ON COLUMN car.order_header.order_no IS 'Unique identifier for each order.';
-</br></br>
+
+</br>
 -- Discount rate column</br>
+</br>
 COMMENT ON COLUMN car.order_header.discount_rate IS 'Percentage discount applied to the whole order.';
-</br></br>
+
+</br>
 -- Order net total column</br>
+</br>
 COMMENT ON COLUMN car.order_header.order_net_total IS 'Total net amount of the order after discounts, = SUM(order_detail.amount) - SUM(order_detail.amount) * order_header.discount_rate ';
 
-</br></br></br>
+</br></br>
 
 p5.</br>
 \c about_x
-</br></br>
+
+</br>
 INSERT INTO car.tweet (
   tweet_message_id, tweeter_account_id, 
   content, 
@@ -1370,12 +1472,13 @@ VALUES (
   'T000000002', 'C230000001', 
   ' Data manipulation in a database refers to the process of adding, altering, retrieving, or deleting data stored within the database. ', 
   '2023-08-05 15:00:00.000000', NULL, NULL, NULL);
-</br></br></br>
-
+ 
+</br></br>
 
 p5.1</br>
 \c about_x
-</br></br>
+
+</br>
 INSERT INTO car.tweet (
   tweet_message_id,
   tweeter_account_id, 
@@ -1393,9 +1496,11 @@ VALUES (
   'https://www.youtube.com/watch?v=T000000002', 
   'https://twitter.com/your_username/status/T000000002'
 );
-</br></br>
+
+</br>
 SELECT * FROM car.tweet WHERE tweet_message_id ='T000000003';
-</br></br>
+
+</br>
 SELECT
      c.customer_id,
      c.first_name,
@@ -1416,37 +1521,46 @@ JOIN car.product AS p ON od.product_id = p.product_id
 JOIN car.category AS cat ON p.category_id = cat.category_id
 ORDER BY c.customer_id, oh.order_no, od.product_id;
 
-</br></br></br>
+</br></br>
 
 p5.2</br>
 \c about_x
-</br></br>
+
+</br>
 UPDATE car.order_detail
 SET    unit_price = 34999.99,
        amount = qty * 34999.99
 WHERE  order_no = 'OR2023000001' AND product_id = 'P00000001';
-</br></br>
+
+</br>
 SELECT * FROM   car.order_detail 
 WHERE  order_no = 'OR2023000001' AND product_id = 'P00000001';
-</br></br>
+
+</br>
 SELECT COUNT(1) FROM car.tweet;
-</br></br>
+
+</br>
 DELETE FROM car.tweet
 WHERE tweet_message_id = 'T000000001';
-</br></br>
-SELECT COUNT(1) FROM car.tweet;
-</br></br></br>
 
+</br>
+SELECT COUNT(1) FROM car.tweet;
+
+</br></br>
 
 p5.3</br>
 SELECT COUNT(1) FROM car.tweet;
-</br></br>
+
+</br>
 DELETE FROM car.tweet
 WHERE tweet_message_id = 'T000000001';
-</br></br>
+
+</br>
 SELECT COUNT(1) FROM car.tweet;
-</br></br>
+
+</br>
 --Merge with Insert or Update</br>
+</br>
 MERGE INTO car.tweet AS target
 USING (
         SELECT
@@ -1470,10 +1584,13 @@ WHEN NOT MATCHED THEN
     INSERT (tweet_message_id, tweeter_account_id, content, publish_dtm, image, video, url)
     VALUES (source.tweet_message_id, source.tweeter_account_id, source.content,   
             source.publish_dtm, source.image, source.video, source.url);
-</br></br>
+
+</br>
 SELECT * FROM car.tweet WHERE tweet_message_id = 'T000000003';
-</br></br>
+
+</br>
 --let us change some sample values, and run the MERGER again</br>
+</br>
 MERGE INTO car.tweet AS target
 USING (
         SELECT
@@ -1497,14 +1614,16 @@ WHEN NOT MATCHED THEN
     INSERT (tweet_message_id, tweeter_account_id, content, publish_dtm, image, video, url)
     VALUES (source.tweet_message_id, source.tweeter_account_id, source.content, 
             source.publish_dtm, source.image, source.video, source.url);
-</br></br>
+
+</br>
 SELECT * FROM car.tweet WHERE tweet_message_id = 'T000000003';
 
-</br></br></br>
+</br></br>
 
 p5.4</br>
 \c about_x
-</br></br>
+
+</br>
 CREATE TABLE car.tweet_shared (
     tweet_message_id   VARCHAR(64) PRIMARY KEY,
     tweeter_account_id VARCHAR(64) REFERENCES car.customer(tweeter_account_id),
@@ -1514,17 +1633,21 @@ CREATE TABLE car.tweet_shared (
     video              VARCHAR(100),
     url                VARCHAR(100)
 );
-</br></br>
+
+</br>
 --Let us truncate the source table and insert new records into it again
+</br>
 TRUNCATE car.tweet;
-</br></br>
+
+</br>
 INSERT INTO car.tweet (
  tweet_message_id, tweeter_account_id, content, publish_dtm, image, video, url)
 VALUES (
 'T000000001', '@thomassbright',
  'Excited to share our latest electric car model!', 
  '2023-08-03 12:00:00.000000', NULL, NULL, NULL);
-</br></br>
+
+</br>
 INSERT INTO car.tweet (
  tweet_message_id, tweeter_account_id, content, publish_dtm, image, video, url)
 VALUES (
@@ -1534,8 +1657,7 @@ VALUES (
  'https://www.youtube.com/watch?v=T000000002', 
  'https://twitter.com/your_username/status/T000000002');
 
-</br></br>
-
+</br>
 INSERT INTO car.tweet (
  tweet_message_id, tweeter_account_id, content, publish_dtm, image, video, url)
 VALUES (
@@ -1545,10 +1667,9 @@ VALUES (
  'https://www.youtube.com/watch?v=T000000003', 
  'https://twitter.com/your_username/status/T000000003');
 
-</br></br>
-
+</br>
 -- Synchronize these two tables</br>
-
+</br>
 INSERT INTO car.tweet_shared (
   tweet_message_id, tweeter_account_id, content, publish_dtm, image, video, url)
 SELECT
@@ -1569,36 +1690,35 @@ ON CONFLICT (tweet_message_id) DO UPDATE
         video = excluded.video,
         url = excluded.url;
 
-</br></br>
-
+</br>
 -- Delete records not present in the source</br>
-
+</br>
 DELETE FROM car.tweet_shared target
 WHERE NOT EXISTS (
     SELECT 1
     FROM car.tweet source
     WHERE target.tweet_message_id = source.tweet_message_id
 );
-</br></br>
 
+
+</br>
 SELECT * FROM car.tweet;
-</br></br>
 
+</br>
 SELECT * FROM car.tweet_shared;
-</br></br>
 
+</br>
 --Delete a row in source and update a row in source table, then synchronize them again</br>
-
+</br>
 DELETE FROM car.tweet WHERE tweet_message_id = 'T000000001';
-</br></br>
 
+</br>
 UPDATE car.tweet SET
   publish_dtm = '2023-09-03 10:22:00.000000',
   content     = 'Advanced Table Synchronization – Updated!'
 WHERE tweet_message_id = 'T000000002';
 
-</br></br>
-
+</br>
 INSERT INTO car.tweet_shared (
   tweet_message_id, tweeter_account_id, content, publish_dtm, image, video, url)
 SELECT
@@ -1619,10 +1739,9 @@ ON CONFLICT (tweet_message_id) DO UPDATE
         video = excluded.video,
         url = excluded.url;
 
-</br></br>
-
+</br>
 -- Delete records not present in the source</br>
-
+</br>
 DELETE FROM car.tweet_shared target
 WHERE NOT EXISTS (
     SELECT 1
@@ -1630,26 +1749,24 @@ WHERE NOT EXISTS (
     WHERE target.tweet_message_id = source.tweet_message_id
 );
 
-</br></br>
-
+</br>
 SELECT * FROM car.tweet;
 
-</br></br>
-
+</br>
 SELECT * FROM car.tweet_shared;
 
-</br></br></br>
+</br></br>
 
 p5.5</br>
 \c about_x
 
-</br></br>
-
+</br>
 BEGIN; -- Start the transaction 
 
-</br></br>
 
+</br>
 -- Insert new record into order_header</br>
+</br>
 INSERT INTO car.order_header (
     order_no, customer_id, order_dtm, delivery_address_1, discount_rate, order_net_total
 )
@@ -1657,9 +1774,9 @@ VALUES (
     'O00000002', 'C230000001', '2023-08-15 14:00:00', '456 Elm St',  0.05,  113999.97
 );
 
-</br></br>
-
+</br>
 -- Insert corresponding record into order_detail</br>
+</br>
 INSERT INTO car.order_detail (
     order_no, product_id, qty, unit_price, amount
 )
@@ -1667,103 +1784,90 @@ VALUES (
     'O00000002', 'P00000001', 3, 39999.99, 119999.97
 );
 
-</br></br>
-
--- Commit the transaction if both inserts succeed</br>
+</br>
+-- Commit the transaction if both inserts succeed
 COMMIT;
 
-</br></br>
-
+</br>
 SELECT * FROM car.order_detail;
 
-</br></br>
-
+</br>
 SELECT order_no, customer_id, order_dtm, delivery_address_1 FROM car.order_header;
 
-</br></br></br>
+</br></br>
 
 p5.6</br>
 \c about_x
 
-</br></br>
-
+</br>
 BEGIN; -- Start the transaction
 
-</br></br>
-
+</br>
 --Update customer's address</br>
-
+</br>
 UPDATE car.customer
 SET    address_1 = '789 Oak St'
 WHERE  customer_id = 'C230000001';
 
-</br></br>
-
+</br>
 --Update order_header's delivery address</br>
-
+</br>
 UPDATE car.order_header
 SET    delivery_address_1 = '789 Oak St'
 WHERE  order_no = 'O00000002';
 
-</br></br>
-
---Commit the transaction if both updates succeed</br>
-
+</br>
+--Commit the transaction if both updates succeed
+</br>
 COMMIT;
 
-</br></br>
-
+</br>
 SELECT customer_id, address_1 
 FROM car.customer;
 
-</br></br>
-
+</br>
 SELECT order_no, customer_id, delivery_address_1 
 FROM car.order_header
 WHERE  order_no = 'O00000002';
 
-</br></br></br>
-
-p5.7</br>
---Connect to your new database, about_x</br>
-\c about_x
-
 </br></br>
 
+p5.7</br>
+--Connect to your new database, about_x
+</br>
+\c about_x
+
+</br>
 TRUNCATE t6;
 
 </br></br>
 
 p5.8</br>
---Connect to your new database, about_x</br>
+--Connect to your new database, about_x
+</br>
 \c about_x
 
-</br></br>
-
+</br>
 TRUNCATE t7 CASCADE;
 
-</br></br>
-
+</br>
 TRUNCATE t6 CASCADE;
 
 </br></br>
 
-
 p5.9</br>
 --Connect to your new database, about_x</br>
-
+</br>
 \c about_x
 
-</br></br>
-
+</br>
 --Describe an existing table car.tweet</br>
-
+</br>
 \d car.tweet
 
-</br></br>
-
---Create a trigger on INSERT, which will prevent content is null </br>
-
+</br>
+--Create a trigger on INSERT, which will prevent content is null
+</br>
 CREATE OR REPLACE FUNCTION prevent_null_content()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -1774,14 +1878,12 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-</br></br>
-
+</br>
 CREATE TRIGGER check_content_before_insert BEFORE INSERT ON car.tweet
 FOR EACH ROW EXECUTE FUNCTION prevent_null_content();
 
-</br></br>
---Create a trigger on UPDATE, which will prevent content is null </br>
-
+</br>--Create a trigger on UPDATE, which will prevent content is null
+</br>
 CREATE OR REPLACE FUNCTION prevent_null_content_update()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -1792,37 +1894,32 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
-</br></br>
-
+</br>
 CREATE TRIGGER check_content_before_update BEFORE UPDATE ON car.tweet
 FOR EACH ROW EXECUTE FUNCTION prevent_null_content_update();
 
-</br></br>
---Now let's test the TRIGGER on INSERT</br>
-
+</br>--Now let's test the TRIGGER on INSERT</br>
+</br>
 INSERT INTO car.tweet(
 tweet_message_id, tweeter_account_id, content, publish_dtm, image, video, url)
 VALUES ('T000000001', '@user123', NULL, '2023-08-05 15:00:00', NULL, NULL, 'https://twitter.com/user123/status/123456');
 
-</br></br>
-
+</br>
 SELECT  * FROM car.tweet;
 
-</br></br>
-
---Now let's test the TRIGGER on UPDATE</br>
+</br>
+--Now let's test the TRIGGER on UPDATE
+</br>
 UPDATE car.tweet
 SET content = NULL
 WHERE tweet_message_id = 'T000000002';
 
-</br></br></br>
-
-p6.</br>
-
-\c about_x
-
 </br></br>
 
+p6.</br>
+\c about_x
+
+</br>
 SELECT c.customer_id, c.first_name, c.last_name, SUM(oh.order_net_total) AS total_amount
 FROM car.customer c
 JOIN car.order_header oh ON c.customer_id = oh.customer_id
@@ -1831,61 +1928,49 @@ GROUP BY c.customer_id, c.first_name, c.last_name;
 </br></br>
 
 p6.1</br>
-
 \c about_x
 
-</br></br>
-
+</br>
 INSERT INTO car.product (product_id, product_name, sku, origin, color, category_id, price)
 VALUES ('P00000002', 'Classic Watch', 'S0002-12345', 'Switzerland', 'Silver', 'CT000001', 599.99);
 
-</br></br>
-
+</br>
 INSERT INTO car.product (product_id, product_name, sku, origin, color, category_id, price)
 VALUES ('P00000003', 'Leather Bag', 'S0003-67890', 'Italy', 'Brown', 'CT000003', 249.99);
 
-</br></br>
-
+</br>
 INSERT INTO car.product (product_id, product_name, sku, origin, color, category_id, price)
 VALUES ('P00000004', 'Wireless Headphones', 'S0004-56789', 'USA', 'Black', 'CT000004', 149.99);
 
-</br></br>
-
+</br>
 INSERT INTO car.product (product_id, product_name, sku, origin, color, category_id, price)
 VALUES ('P00000005', 'Smartphone', 'S0005-23456', 'China', 'Gold', 'CT000001', 699.99);
 
-</br></br>
-
+</br>
 INSERT INTO car.product (product_id, product_name, sku, origin, color, category_id, price)
 VALUES ('P00000006', 'Laptop', 'S0006-34567', 'USA', 'Silver', 'CT000001', 999.99);
 
-</br></br>
-
+</br>
 INSERT INTO car.product (product_id, product_name, sku, origin, color, category_id, price)
 VALUES ('P00000007', 'Sports Shoes', 'S0007-45678', 'Germany', 'Blue', 'CT000001', 89.99);
 
-</br></br>
-
+</br>
 INSERT INTO car.product (product_id, product_name, sku, origin, color, category_id, price)
 VALUES ('P00000008', 'HD Television', 'S0008-78901', 'Japan', 'Black', 'CT000001', 799.99);
 
-</br></br>
-
+</br>
 INSERT INTO car.product (product_id, product_name, sku, origin, color, category_id, price)
 VALUES ('P00000009', 'Designer Sunglasses', 'S0009-89012', 'Italy', 'Brown', 'CT000001', 199.99);
 
-</br></br>
-
+</br>
 INSERT INTO car.product (product_id, product_name, sku, origin, color, category_id, price)
 VALUES ('P00000010', 'Fitness Tracker', 'S0010-90123', 'USA', 'Black', 'CT000001', 49.99);
 
-</br></br>
-
+</br>
 INSERT INTO car.product (product_id, product_name, sku, origin, color, category_id, price)
 VALUES ('P00000011', 'Coffee Maker', 'S0011-01234', 'Switzerland', 'Silver', 'CT000001', 79.99);
 
-</br></br>
-
+</br>
 SELECT p.category_id,
     MAX(p.price::NUMERIC) AS max_price,
     MIN(p.price::NUMERIC) AS min_price,
@@ -1902,15 +1987,12 @@ ORDER BY p.category_id;
 </br></br>
 
 p6.2</br>
-
 \c about_x
 
-</br></br>
-
+</br>
 \d car.order_detail
 
-</br></br>
-
+</br>
 SELECT
     SUM(amount) AS  total_amount,
     REGR_COUNT(qty, amount) AS num_valid_rows,
@@ -1934,12 +2016,17 @@ FROM car.order_detail;
 p6.3</br>
 \c about_x
 
+</br>
 --Describe the table structure of car.product
+</br>
 \d car.product
 
+</br>
 --Describe the table structure of car.category
+</br>
 \d car.category
 
+</br>
 SELECT
     p.product_id,
     p.product_name,
@@ -1958,7 +2045,7 @@ JOIN car.category_designer cd ON p.category_id = cd.category_id
 WHERE p.product_id = 'P00000001'
 GROUP BY p.product_id, p.product_name, p.price, p.sku, p.category_id, c.description;
 
-
+</br></br>
 
 p6.4
 \c about_x

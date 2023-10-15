@@ -353,7 +353,7 @@ VALUES (
      INTERVAL '2 Years 3 Months 17 Days 3 Hours 20 Minutes 8 Seconds'
 );
 
-</br></br></br>
+</br>
 SELECT
       my_int,
       my_timestamp_0,
@@ -372,12 +372,15 @@ CREATE TABLE event (
     event_name VARCHAR(100),
     event_duration INTERVAL(4)
 );
-</br></br>
+
+</br>
 INSERT INTO event (event_name, event_duration)
 VALUES ('Meeting', INTERVAL '3 hours 30 minutes 15.1234 seconds');
-</br></br>
+
+</br>
 SELECT * FROM event;
-</br></br></br>
+
+</br></br>
 
 
 p2.13</br>
@@ -391,29 +394,34 @@ VALUES (
     'Buy groceries', 
     TRUE
 );
-</br></br>
+
+</br>
 SELECT
       my_int,
       my_varchar,         
       my_boolean          
 FROM  t2
 WHERE my_int = 16;
-</br></br>
+
+</br>
 SELECT 'yes'::BOOLEAN AS is_true, NULL::BOOLEAN AS is_false;
 
-</br></br></br>
+</br></br>
 
 p2.14</br>
 CREATE TYPE MOOD AS ENUM ('sad', 'ok', happy');
-</br></br>
+
+</br>
 CREATE DOMAIN POSTAL_CODE AS TEXT
 CHECK(VALUE ~ '^\d{5}$' OR VALUE ~ '^\d{5}-\d{4}$');
 
+</br>
 CREATE TABLE t3 (
    my_int          INT,
    my_mood         MOOD,
    my_postal_code  POSTAL_CODE);
-</br></br>
+
+</br>
 INSERT INTO t3 (
     my_int,
     my_mood,         
@@ -424,10 +432,11 @@ VALUES (
     'happy', 
     '01234-1234'
 );
-</br></br>
+
+</br>
 SELECT my_int, my_mood, my_postal_code FROM t3 WHERE my_int =1;
 
-</br></br></br>
+</br></br>
 
 p2.15</br>
 INSERT INTO t2 (my_int, my_json) --JSON
@@ -435,7 +444,8 @@ VALUES (
    17,
    '{"title": "DBA Guidebook", "author": "Moss", "published_year": 2023}'
 );
-</br></br>
+
+</br>
 SELECT 
    my_int, 
    my_json->>'title' AS title, 
@@ -443,13 +453,15 @@ SELECT
   (my_json->>'published_year')::INTEGER AS published_year
 FROM t2 
 WHERE my_int = 17;
-</br></br>
+
+</br>
 INSERT INTO t2 (my_int, my_jsonb)  --JSONB
 VALUES (
    18,
    '{"title": "DBA Guidebook", "author": "Moss", "published_year": 2023}'
 );
-</br></br>
+
+</br>
 SELECT 
    my_int, 
    my_jsonb->>'title' AS title, 
@@ -458,8 +470,8 @@ SELECT
 FROM t2 
 WHERE my_int = 18;
 
+</br></br>
 
-</br></br></br>
 p2.16</br>
 SELECT 
    my_int, 
@@ -477,7 +489,7 @@ SELECT
 FROM t2 
 WHERE my_int = 17;
 
-</br></br></br>
+</br></br>
 
 p2.17</br>
 SELECT
@@ -488,14 +500,14 @@ SELECT
 FROM t2
 WHERE my_int = 17;
 
-</br></br></br>
+</br></br>
 
 p2.18</br>
 SELECT '{"a":1, "b":2}'::jsonb @> '{"b":2}'::jsonb AS checked;
 SELECT '{"b":2}'::jsonb <@ '{"a":1, "b":2}'::jsonb  AS checked;
 SELECT '{"a":1, "b":2}'::jsonb ? 'b' AS checked;
 
-</br></br></br>
+</br></br>
 
 p2.19</br>
 INSERT INTO t2 (my_int, my_json)
@@ -503,16 +515,18 @@ VALUES (
     18,
     to_json('{"title": "SQL Certification"}'::json)
 );
-</br></br>
+
+</br>
 SELECT
    my_int,
    my_json #> '{title}' AS title
 FROM t2
 WHERE my_int = 18;
-</br></br>
-SELECT array_to_json('{{1,5},{99,100}}'::int[]) AS checked;
-</br></br>
 
+</br>
+SELECT array_to_json('{{1,5},{99,100}}'::int[]) AS checked;
+
+</br>
 INSERT INTO t2 (my_int, my_jsonb)
 VALUES (
     19,
@@ -522,7 +536,8 @@ VALUES (
         'published_year', '2023'::jsonb
     )
 );
-</br></br>
+
+</br>
 SELECT
    my_int,
    my_jsonb #> '{title}' AS title,
@@ -538,8 +553,8 @@ SELECT
   (my_jsonb->>'published_year') AS published_year
 FROM t2 
 WHERE my_int = 19;
-</br></br>
 
+</br>
 INSERT INTO t2 (my_int, my_jsonb)
 VALUES (
     20,
@@ -549,7 +564,8 @@ VALUES (
         '{" published_year ": 2023}'::jsonb
     )
 );
-</br></br>
+
+</br>
 SELECT 
    my_int, my_jsonb
 FROM t2 
@@ -563,13 +579,14 @@ SELECT
 FROM t2 
 WHERE my_int = 20;
 
-</br></br>
+</br>
 INSERT INTO t2 (my_int, my_jsonb)
 VALUES (
     21,
     to_jsonb('{"title": "DBA Guidebook", "author": "Moss", "published_year": 2023}'::jsonb)
 );
-</br></br>
+
+</br>
 SELECT
    my_int,
    my_jsonb->>'title' AS title,
@@ -578,7 +595,7 @@ SELECT
 FROM t2
 WHERE my_int = 21;
 
-</br></br>
+</br>
 INSERT INTO t2 (my_int, my_jsonb)
 VALUES (
   22,
@@ -587,7 +604,8 @@ VALUES (
     ]
   )
 );
-</br></br>
+
+</br>
 SELECT
    my_int,
    (my_jsonb #> '{0,title}') AS title,
@@ -596,7 +614,7 @@ SELECT
 FROM t2
 WHERE my_int = 22;
 
-</br></br>
+</br>
 INSERT INTO t2 (my_int, my_jsonb)
 VALUES (
   23,
@@ -604,7 +622,8 @@ VALUES (
      (SELECT r FROM (SELECT 'DBA Guidebook' AS title, 'Moss' AS author, 2023 AS published_year) AS r)
     )
 );
-</br></br>
+
+</br>
 SELECT
    my_int,
    my_jsonb->>'title' AS title,
@@ -613,7 +632,7 @@ SELECT
 FROM t2
 WHERE my_int = 23;
 
-</br></br>
+</br>
 INSERT INTO t2 (my_int, my_jsonb)
 VALUES (
     24,
@@ -622,7 +641,8 @@ VALUES (
         ARRAY['DBA Guidebook', 'Moss', '2023']
     )::jsonb
 );
-</br></br>
+
+</br>
 SELECT
    my_int,
    my_jsonb->>'title' AS title,
@@ -631,22 +651,23 @@ SELECT
 FROM t2
 WHERE my_int = 24;
 
+</br></br>
 
-</br></br></br>
 p2.20</br>
 SELECT my_int, jsonb_each(my_jsonb) FROM t2 WHERE my_int =24;
 
-</br></br></br>
+</br></br>
 
 p2.21</br>
 INSERT INTO t2 (my_int, my_xml)
 VALUES (25, '<root><element>Example XML</element></root>');
-</br></br>
+
+</br>
 SELECT my_int, my_xml from t2 where my_int=42;
 
-</br></br></br>
+</br></br>
 
-p2.22</br></br>
+p2.22</br>
 CREATE TABLE t4 (
     my_int            INT,
     my_varchar_array  VARCHAR[],
@@ -655,30 +676,39 @@ CREATE TABLE t4 (
     my_boolean_array  BOOLEAN[],
     my_date_array     DATE[]
 );
-</br></br>
-INSERT INTO t4 (my_int, my_varchar_array) VALUES (1, '{"value1", "value2", "value3"}');
-</br></br>
-INSERT INTO t4 (my_int, my_int_array) VALUES (2, '{1, 2, 3}');
-</br></br>
-INSERT INTO t4 (my_int, my_numeric_array) VALUES (3, '{1.23, 4.56, 7.89}');
-</br></br>
-INSERT INTO t4 (my_int, my_boolean_array) VALUES (4, '{true, false, true}');
-</br></br>
 
+</br>
+INSERT INTO t4 (my_int, my_varchar_array) VALUES (1, '{"value1", "value2", "value3"}');
+
+</br>
+INSERT INTO t4 (my_int, my_int_array) VALUES (2, '{1, 2, 3}');
+
+</br>
+INSERT INTO t4 (my_int, my_numeric_array) VALUES (3, '{1.23, 4.56, 7.89}');
+
+</br>
+INSERT INTO t4 (my_int, my_boolean_array) VALUES (4, '{true, false, true}');
+
+</br>
 INSERT INTO t4 (my_int, my_date_array)  
 VALUES (5, '{"2023-05-01", "2023-05-15", "2023-06-01"}');
-</br></br>
-SELECT my_varchar_array[1] FROM t4 WHERE my_int = 1;
-</br></br>
-SELECT my_int_array[2] FROM t4 WHERE my_int = 2;
-</br></br>
-SELECT my_numeric_array[3] FROM t4 WHERE my_int = 3;
-</br></br>
-SELECT my_boolean_array[1] FROM t4 WHERE my_int = 4;
-</br></br>
-SELECT my_date_array[2]    FROM t4 WHERE my_int = 5;
-</br></br></br>
 
+</br>
+SELECT my_varchar_array[1] FROM t4 WHERE my_int = 1;
+
+</br>
+SELECT my_int_array[2] FROM t4 WHERE my_int = 2;
+
+</br>
+SELECT my_numeric_array[3] FROM t4 WHERE my_int = 3;
+
+</br>
+SELECT my_boolean_array[1] FROM t4 WHERE my_int = 4;
+
+</br>
+SELECT my_date_array[2]    FROM t4 WHERE my_int = 5;
+
+</br></br>
 
 p2.23</br>
 CREATE TABLE t5 (
@@ -690,44 +720,56 @@ CREATE TABLE t5 (
     my_varchar        VARCHAR,
     my_value          NUMERIC
 );
-</br></br>
+
+</br>
 INSERT INTO t5 (my_int, my_tsrange, my_varchar, my_value)
 VALUES (1, '[2023-08-01 00:00:00, 2023-08-02 00:00:00)', 'USD/EUR', 1.221);
-</br></br>
+
+</br>
 INSERT INTO t5 (my_int, my_tsrange, my_varchar, my_value)
 VALUES (2, '[2023-08-02 00:00:00, 2023-08-03 00:00:00)', 'USD/EUR', 1.222);
-</br></br>
+
+</br>
 INSERT INTO t5 (my_int, my_tsrange, my_varchar, my_value)
 VALUES (3, '[2023-08-03 00:00:00, 2023-08-04 00:00:00)', 'USD/EUR', 1.223);
-</br></br>
+
+</br>
 SELECT my_varchar AS Currency, my_value AS rate FROM t5
 WHERE  my_tsrange  @> '2023-08-03'::TIMESTAMP;
-</br></br>
+
+</br>
 SELECT my_varchar AS Currency, my_value AS rate FROM t5
 WHERE my_tsrange  @> '2023-08-02'::TIMESTAMP;
-</br></br>
+
+</br>
 SELECT my_varchar AS Currency, my_value AS rate FROM t5
 WHERE my_tsrange  @> '2023-08-01'::TIMESTAMP;
-</br></br>
+
+</br>
 INSERT INTO t5 (my_int, my_tstzrange, my_varchar, my_value)
 VALUES (4, '[2023-08-01 00:00:00+8, 2023-08-02 00:00:00+8)', 'USD/EUR', 1.224);
-</br></br>
+
+</br>
 INSERT INTO t5 (my_int, my_tstzrange, my_varchar, my_value)
 VALUES (5, '[2023-08-02 00:00:00+8, 2023-08-03 00:00:00+8)', 'USD/EUR', 1.225);
-</br></br>
+
+</br>
 INSERT INTO t5 (my_int, my_tstzrange, my_varchar, my_value)
 VALUES (6, '[2023-08-03 00:00:00+8, 2023-08-04 00:00:00+8)', 'USD/EUR', 1.226);
-</br></br>
+
+</br>
 SELECT my_varchar AS Currency, my_value AS rate FROM t5
 WHERE my_tstzrange  @> '2023-08-01'::TIMESTAMP WITH TIME ZONE;
-</br></br>
+
+</br>
 SELECT my_varchar AS Currency, my_value AS rate FROM t5
 WHERE my_tstzrange  @> '2023-08-02'::TIMESTAMP WITH TIME ZONE;
-</br></br>
+
+</br>
 SELECT my_varchar AS Currency, my_value AS rate FROM t5
 WHERE my_tstzrange  @> '2023-08-03'::TIMESTAMP WITH TIME ZONE;
 
-</br></br></br>
+</br></br>
 
 p2.24</br>
 INSERT INTO t5 (my_int, my_int4range, my_varchar, my_value)

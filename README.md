@@ -2054,11 +2054,12 @@ SELECT oh.order_no, oh.order_net_total
 FROM car.order_header oh
 WHERE oh.order_net_total::numeric > (SELECT AVG(order_net_total::numeric) FROM car.order_header);
 
+</br></br>
 
-
-p6.5
+p6.5</br>
 \c about_x
 
+</br></br>
 WITH OrderCounts AS (
     SELECT customer_id, COUNT(*) AS order_count
     FROM car.order_header
@@ -2068,14 +2069,14 @@ SELECT c.customer_id, c.first_name, c.last_name, COALESCE(oc.order_count, 0) AS 
 FROM car.customer c
 LEFT JOIN OrderCounts oc ON c.customer_id = oc.customer_id;
 
+</br></br>
 
-
-p6.6
+p6.6</br>
 \c about_x
 
--- Insert more sample data
-
+</br>
 -- Inserting into car.customer
+</br>
 INSERT INTO car.customer (customer_id, title, first_name, middle_name, last_name, email, phone, address_1, address_2, address_3, address_4, city, country, postal_code, tweeter_account_id)
 VALUES
     ('C00000002', 'Ms.', 'Jane', '', 'Johnson', 'jane@example.com', '+9876543210', '456 Elm St', '', '', '', 'Townsville', 'Countryland', '54321', '@janejohnson'),
@@ -2084,8 +2085,9 @@ VALUES
     ('C00000004', 'Prof.', 'Emily', '', 'Brown', 'emily@example.com', '+5544332211', '101 Pine St', '', '', '', 'Citytown', 'Countryland', '45678', '@profemily'),
     ('C00000005', 'Mrs.', 'Daniel', '', 'Miller', 'daniel@example.com', '+3344556677', '222 Maple St', '', '', '', 'Suburbville', 'Countryland', '98765', '@mrsdaniel');
     
-
+</br>
 -- Inserting into car.category
+</br>
 INSERT INTO car.category (category_id, description)
 VALUES
     ('CT000002', 'Car Charger'),
@@ -2094,7 +2096,9 @@ VALUES
     ('CT000004', 'Accessory'),
     ('CT000005', 'Cleaning Kid');
 
+</br>
 -- Inserting into car.product
+</br>
 INSERT INTO car.product (product_id, product_name, sku, origin, color, category_id, price)
 VALUES
     ('P00000002', 'Quick Charge', 'SKU002', 'China', 'Blue', 'CT000002', '$699.99'),
@@ -2103,7 +2107,9 @@ VALUES
     ('P00000004', 'Car Cam', 'SKU004', 'UK', 'Various', 'CT000004', '$399.99'),
     ('P00000005', 'Easy Clean', 'SKU005', 'France', 'Red', 'CT000005', '$69.99');
 
+</br>
 -- Inserting into car.category_designer
+</br>
 INSERT INTO car.category_designer (category_id, designer)
 VALUES
     ('CT000002', 'Peter'),
@@ -2112,8 +2118,10 @@ VALUES
     ('CT000004', 'Eddie'),
     ('CT000005', 'Gary');
 
+</br>
 -- Inserting into car.order_header
-INSERT INTO car.order_header (order_no, customer_id, order_dtm, delivery_address_1, discount_rate, order_net_total)
+I</br>
+NSERT INTO car.order_header (order_no, customer_id, order_dtm, delivery_address_1, discount_rate, order_net_total)
 VALUES
     ('OR00000001', 'C00000001', '2023-08-01', '123 Main St', 0.1, (4 * 39999.99) - (4 * 39999.99) * 0.1),
     ('OR00000002', 'C00000002', '2023-08-02', '456 Elm St', 0.05, (5 * 699.99) - (5 * 699.99) * 0.05),
@@ -2121,7 +2129,9 @@ VALUES
     ('OR00000004', 'C00000004', '2023-08-04', '101 Pine St', 0.15, (3 * 399.99) - (3 * 399.99) * 0.15),
     ('OR00000005', 'C00000005', '2023-08-05', '222 Maple St', 0.1, (2 * 69.99) - (2 * 69.99) * 0.1);
 
+</br>
 -- Inserting into car.order_detail
+</br>
 INSERT INTO car.order_detail (order_no, product_id, qty, unit_price, amount)
 VALUES
     ('OR00000001', 'P00000001', 4, 39999.99, 159999.96),
@@ -2130,6 +2140,7 @@ VALUES
     ('OR00000004', 'P00000004', 3, 399.99, 1199.97),
     ('OR00000005', 'P00000005', 2, 69.99, 139.98);
 
+</br>
 SELECT c.customer_id, c.first_name, c.last_name, oh.order_no,
        SUM(oh.order_net_total) 
        OVER (PARTITION BY c.customer_id 
@@ -2139,6 +2150,7 @@ JOIN car.order_header oh ON c.customer_id = oh.customer_id
 WHERE EXTRACT(YEAR FROM oh.order_dtm) = 2023
 ORDER BY c.customer_id, oh.order_no;
 
+</br>
 SELECT DISTINCT p.category_id, 
        SUM(od.amount) OVER (PARTITION BY p.category_id) AS cumulative_total_by_category
 FROM car.order_detail od
@@ -2147,6 +2159,7 @@ JOIN car.order_header oh ON od.order_no = oh.order_no
 WHERE EXTRACT(YEAR FROM oh.order_dtm) = 2023
 ORDER BY p.category_id;
 
+</br>
 SELECT DISTINCT cd.designer, SUM(od.amount)
        OVER (PARTITION BY cd.designer ORDER BY cd.designer) AS cumulative_total_by_designer
 FROM car.order_detail od 
@@ -2156,11 +2169,13 @@ JOIN car.order_header oh ON od.order_no = oh.order_no
 WHERE EXTRACT(YEAR FROM oh.order_dtm) = 2023
 ORDER BY cd.designer;
 
+</br></br>
 
-
-p6.7
+p6.7</br>
 -- Create more sales data for year 2022
+</br>
 -- Inserting into car.order_header
+</br>
 INSERT INTO car.order_header (order_no, customer_id, order_dtm, delivery_address_1, discount_rate, order_net_total)
 VALUES
     ('2200000001', 'C00000001', '2022-07-01', '123 Main St', 0.1, (5 * 39999.99) - (5 * 39999.99) * 0.1),
@@ -2169,7 +2184,9 @@ VALUES
     ('2200000004', 'C00000004', '2022-07-04', '101 Pine St', 0.15, (1 * 399.99) - (1 * 399.99) * 0.15),
     ('2200000005', 'C00000005', '2022-07-05', '222 Maple St', 0.1, (1 * 69.99) - (1 * 69.99) * 0.1);
 
+</br>
 -- Inserting into car.order_detail
+</br>
 INSERT INTO car.order_detail (order_no, product_id, qty, unit_price, amount)
 VALUES
     ('2200000001', 'P00000001', 3, 39999.99, 119999.97),
@@ -2178,6 +2195,7 @@ VALUES
     ('2200000004', 'P00000004', 1, 399.99, 399.99),
     ('2200000005', 'P00000005', 1, 69.99, 69.99);
 
+</br>
 SELECT 
     p.product_name, EXTRACT(YEAR FROM oh.order_dtm) AS order_year,
     SUM(od.amount) AS total_sales,
@@ -2189,9 +2207,9 @@ JOIN car.order_header oh ON od.order_no = oh.order_no
 GROUP BY EXTRACT(YEAR FROM oh.order_dtm), p.product_id
 ORDER BY p.product_id, order_year;
 
+</br></br>
 
-
-p6.8
+p6.8</br>
 SELECT designer, total_sales, ROW_NUMBER() OVER (ORDER BY total_sales DESC) AS sales_rank
 FROM (
     SELECT cd.designer, SUM(od.amount) AS total_sales
@@ -2204,9 +2222,9 @@ FROM (
 ) AS designer_sales
 ORDER BY sales_rank;
 
+</br></br>
 
-
-p6.9
+p6.9</br>
 SELECT
     p.product_name,
     SUM(od.amount) AS total_sales,
@@ -2220,9 +2238,9 @@ WHERE EXTRACT(YEAR FROM oh.order_dtm) = 2023
 GROUP BY p.product_name
 ORDER BY sales_rank;
 
+</br></br>
 
-
-p6.10
+p6.10</br>
 SELECT DISTINCT ON (cd.designer) cd.designer,
 FIRST_VALUE(oh.order_dtm) OVER (PARTITION BY cd.designer 
    ORDER BY oh.order_dtm) AS first_order_date,
@@ -2236,9 +2254,9 @@ JOIN  car.category_designer cd ON p.category_id = cd.category_id
 WHERE EXTRACT(YEAR FROM oh.order_dtm) = 2023
 ORDER BY cd.designer, last_order_date;
 
+</br></br>
 
-
-p6.11
+p6.11</br>
 SELECT p.product_name, EXTRACT(YEAR FROM oh.order_dtm) AS order_year,
     SUM(od.amount) AS total_sales,
     NTILE(3) OVER (PARTITION BY EXTRACT(YEAR FROM oh.order_dtm) ORDER BY SUM(od.amount) DESC) AS sales_quartile
@@ -2249,6 +2267,7 @@ WHERE EXTRACT(YEAR FROM oh.order_dtm) = 2023
 GROUP BY p.product_name, EXTRACT(YEAR FROM oh.order_dtm)
 ORDER BY sales_quartile, total_sales DESC;
 
+</br>
 SELECT p.product_name, EXTRACT(YEAR FROM oh.order_dtm) AS order_year,
     SUM(od.amount) AS total_sales,
     NTILE(4) OVER (PARTITION BY EXTRACT(YEAR FROM oh.order_dtm) ORDER BY SUM(od.amount) DESC) AS sales_quartile
@@ -2259,9 +2278,9 @@ WHERE EXTRACT(YEAR FROM oh.order_dtm) = 2023
 GROUP BY p.product_name, EXTRACT(YEAR FROM oh.order_dtm)
 ORDER BY sales_quartile, total_sales DESC;
 
+</br></br>
 
-
-p6.12
+p6.12</br>
 SELECT p.product_name, EXTRACT(YEAR FROM oh.order_dtm) AS order_year,
     SUM(od.amount) AS total_sales,
     PERCENT_RANK() OVER (PARTITION BY EXTRACT(YEAR FROM oh.order_dtm) ORDER BY SUM(od.amount)) AS percent_rank,
@@ -2273,9 +2292,9 @@ WHERE EXTRACT(YEAR FROM oh.order_dtm) = 2023
 GROUP BY p.product_name, EXTRACT(YEAR FROM oh.order_dtm)
 ORDER BY order_year, percent_rank;
 
+</br></br>
 
-
-p6.13
+p6.13</br>
 SELECT
     c.city,
     c.country,
@@ -2291,9 +2310,9 @@ JOIN car.category_designer cd ON ct.category_id = cd.category_id
 GROUP BY c.city, c.country, ct.description, cd.designer
 ORDER BY c.country, c.city, ct.description, cd.designer;
 
+</br></br>
 
-
-p6.14
+p6.14</br>
 SELECT
     c.city,
     c.country,
@@ -2310,9 +2329,9 @@ GROUP BY
     ROLLUP ( c.city, c.country, ct.description, cd.designer)
 ORDER BY     c.country, c.city, ct.description, cd.designer;
 
+</br></br>
 
-
-p6.15
+p6.15</br>
 SELECT
     c.country,
     c.city,
@@ -2329,9 +2348,9 @@ GROUP BY
 ORDER BY
     c.country, c.city, ct.description;
 
+</br></br>
 
-
-p6.16
+p6.16</br>
 SELECT
     c.country,
     c.city,
@@ -2348,9 +2367,9 @@ GROUP BY
 ORDER BY
     c.country, c.city, ct.description;
 
+</br></br>
 
-
-p6.17
+p6.17</br>
 \c about_x
 
 --Create a new table with JSON Data type, we will JSON to store semi-structured data
@@ -2361,7 +2380,9 @@ CREATE TABLE car.tweet_comment (
     tweet_message_id VARCHAR(64) REFERENCES car.tweet(tweet_message_id)
 );
 
+</br>
 --Insert more sample data
+</br>
 INSERT INTO car.tweet (tweet_message_id, tweeter_account_id, content, publish_dtm)
 VALUES
     ('tweet001', '@thomassbright', 'Excited about our new product launch! #innovation', '2023-07-01 10:00:00.000000'),
@@ -2375,6 +2396,7 @@ VALUES
     ('tweet009', '@thomassbright', 'Learn how our Super Battery Pack is changing the industry. #innovation', '2023-07-09 20:10:00.000000'),
     ('tweet010', '@thomassbright', 'Visit our website to explore the full range of our products. #website', '2023-07-10 22:30:00.000000');
 
+</br>
 INSERT INTO car.tweet_comment (comment_id, comment_dtm, comment, tweet_message_id)
 VALUES
     ('comment006', '2023-09-02 11:30:00.000000', '{"text": "Looking forward to the results!"}', 'T000000003'),
@@ -2384,22 +2406,27 @@ VALUES
     ('comment010', '2023-07-03 16:30:00.000000', '{"text": "Impressive product!, I ordered Super Battery Pack"}', 'tweet002'),
     ('comment011', '2023-07-03 16:30:00.000000', '{"text": "Impressive product!, I ordered Super Battery Pack"}', 'tweet002');
 
+</br></br>
 
-
-p6.18
+p6.18</br>
 --Select Tweet comments
+</br>
 SELECT comment_dtm, c.comment->>'text' as comments FROM car.tweet_comment c;
 
+</br>
 --Select Tweet comments
+</br>
 SELECT comment_dtm, c.comment->>'text' as comments 
 FROM   car.tweet_comment c
 WHERE  LOWER(c.comment->>'text') LIKE '%battery%';
 
+</br>
 SELECT p.product_id
 FROM   car.product p
 JOIN   car.tweet_comment c ON POSITION('battery' IN LOWER(p.product_name)) > 0
 WHERE  LOWER(c.comment->>'text') LIKE '%battery%';
 
+</br>
 SELECT
   oh.order_dtm,
   p.product_name,
@@ -2414,6 +2441,7 @@ WHERE od.product_id IN (
   JOIN   car.tweet_comment c ON POSITION('battery' IN LOWER(p.product_name)) > 0
   WHERE LOWER(c.comment->>'text') LIKE '%battery%');
 
+</br>
 SELECT
      tc.comment_text AS tweet_comment, tc.comment_dtm,
      oh.order_dtm, p.product_name, od.product_id, od.amount
@@ -2433,172 +2461,209 @@ WHERE od.product_id IN (
     WHERE  LOWER(c.comment->>'text') LIKE '%battery%'
 );
 
+</br></br>
 
-
-p6.19
+p6.19</br>
 \c about_x
 
+</br>
 \d car.tweet 
 
+</br></br>
 
-
-p6.20
+p6.20</br>
 \c about_x
 
+</br>
 --There are 12 tweets, only 2 of them contain valid URL
+</br>
 --Retrieve records that contain valid URL
+</br>
 SELECT regexp_replace(url, E'[^https?://[^\s]+]', '', 'g') AS full_urls
 FROM   car.tweet
 WHERE  url ~ E'https?://[^\s]+';
 
+</br></br>
 
-
-p6.21
+p6.21</br>
 \c about_x
 
+</br>
 --Insert a sample record
+</br>
 INSERT INTO car.tweet (tweet_message_id, tweeter_account_id, content, publish_dtm)
 VALUES (
 'T20230907123456789', '@thomassbright', 'I have compared the products and found this one is interesting, feel free to contact me by email if you want know my comparison result, my email is thomas@mythomasbrighttest.com.', '2023-08-01 12:00:00');
 
+</br>
 --Extract email address from free form text
+</br>
 SELECT 
  REGEXP_MATCHES(content, E'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}', 'g') AS   
  email_addresses
 FROM car.tweet
 WHERE content ~ E'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}';
 
+</br></br>
 
-
-p6.22
+p6.22</br>
 \c about_x
 
-
+</br>
 SELECT comment_id,
    array_length(regexp_split_to_array(json_extract_path_text(comment, 'text')::text, E'\\s+'), 1) 
    AS word_count
 FROM car.tweet_comment
 ORDER BY array_length(regexp_split_to_array(json_extract_path_text(comment, 'text')::text, E'\\s+'), 1) DESC;
 
+</br></br>
 
-
-p6.23
+p6.23</br>
 \c about_x
 
-
+</br>
 SELECT comment_id,
    array_length(regexp_split_to_array(json_extract_path_text(comment, 'text')::text, E'\\s+'), 1) 
    AS word_count
 FROM car.tweet_comment
 ORDER BY array_length(regexp_split_to_array(json_extract_path_text(comment, 'text')::text, E'\\s+'), 1) DESC;
 
+</br>
 SELECT content 
 FROM   car.tweet 
 WHERE  tweet_message_id = 'T20230907123456789';
 
+</br></br>
 
-
-p6.24
+p6.24</br>
 \c about_x
 
+</br>
 SELECT *
 FROM car.tweet
 WHERE content ~ E'#\\w+';
 
+</br></br>
 
-
-p6.25
+p6.25</br>
 \c about_x
 
+</br>
 SELECT * FROM car.tweet WHERE content ~ E'@[A-Za-z0-9_]+';
 
+</br></br>
 
-
-p6.26
+p6.26</br>
 \c about_x
 
+</br>
 SELECT tweet_message_id, comment->>'text' AS comment
 FROM   car.tweet_comment
 WHERE  TO_TSVECTOR('english', comment->>'text') @@ TO_TSQUERY('Super');
 
+</br></br>
 
-
-p6.27
+p6.27</br>
 \c about_x
 
+</br>
 -- Inserting a tweet with hexadecimal data
+</br>
 INSERT INTO car.tweet (tweet_message_id, tweeter_account_id, content, publish_dtm)
 VALUES ('tweet011', '@thomassbright', E'\\x48656c6c6f20776f726c6421', '2023-08-01 12:00:00');
 
+</br>
 -- Inserting another tweet with hexadecimal data
+</br>
 INSERT INTO car.tweet (tweet_message_id, tweeter_account_id, content, publish_dtm)
 VALUES ('tweet012', '@thomassbright', E'\\x5468697320697320616e6f7468657220747765657421', '2023-08-02 12:00:00');
 
+</br>
 -- Inserting a tweet with regular text content
+</br>
 INSERT INTO car.tweet (tweet_message_id, tweeter_account_id, content, publish_dtm)
 VALUES ('tweet013', '@thomassbright', 'This is a regular text tweet.', '2023-08-03 12:00:00');
 
+</br>
 -- Inserting a tweet with more hexadecimal data
+</br>
 INSERT INTO car.tweet (tweet_message_id, tweeter_account_id, content, publish_dtm)
 VALUES ('tweet014', '@thomassbright', E'\\x48657861646563696d616c20646174612069732068657821', '2023-08-04 12:00:00');
 
+</br>
 -- Searching for encoded data (Hexadecimal) in content
+</br>
 SELECT tweet_message_id, tweeter_account_id, content
 FROM   car.tweet
 WHERE  content ~ E'\\\\x[0-9A-Fa-f]+';
 
+</br></br>
 
-
-p6.28
+p6.28</br>
 \c about_x
 
+</br>
 SELECT date_trunc('hour', publish_dtm) AS tweet_hour, count(*) AS tweet_count
 FROM car.tweet
 GROUP BY tweet_hour
 ORDER BY tweet_hour;
 
+</br></br>
 
-
-p6.29
+p6.29</br>
 \c about_x
 
+</br>
 SELECT
     COUNT(*) AS total_tweets,
     SUM(CASE WHEN image IS NOT NULL THEN 1 ELSE 0 END) AS tweets_with_images,
     SUM(CASE WHEN image IS NULL THEN 1 ELSE 0 END) AS tweets_without_images
 FROM car.tweet;
 
+</br></br>
 
-
-p6.30
+p6.30</br>
 \c about_x
 
+</br>
 SELECT tweeter_account_id, COUNT(*) AS tweet_count
 FROM car.tweet
 GROUP BY tweeter_account_id
 ORDER BY tweet_count DESC;
 
+</br></br>
 
-
-p6.31
+p6.31</br>
 --connect to database about_x
+</br>
 \c about_x
 
+</br>
 --set off expanded display off
+</br>
 \x off  
 
+</br>
 --Check existing unstructured data in car.tweet 
-SELECT tweet_message_id, content FROM car.tweet;
+</br>SELECT tweet_message_id, content FROM car.tweet;
 
+</br>
 --check existing structured data in car.product
+</br>
 SELECT product_name FROM car.product;
 
+</br>
 --Clear old tweet_comment 
+</br>
 TRUNCATE car.tweet_comment;
 
+</br>
 --Ok, let create insights in semi-structured data type by blending unstructured data
+</br>
 --with structured data
-INSERT INTO car.tweet_comment (comment_id, comment_dtm, comment, tweet_message_id)
+</br>INSERT INTO car.tweet_comment (comment_id, comment_dtm, comment, tweet_message_id)
+
+</br>
 SELECT
     'comment_id_for_tweet_' || tweet_message_id,
      current_timestamp, -- or the desired timestamp
@@ -2608,21 +2673,31 @@ FROM car.tweet AS tweet
 JOIN car.product AS product
 ON   tweet.content ILIKE '%' || product.product_name || '%';
 
+</br>
 --set on expanded display 
+</br>
 \x on
 
+</br>
 --get the semi-structured data
+</br>
 SELECT * FROM car.tweet_comment;
 
+</br></br>
 
-
-p6.32
-
+p6.32</br>
 \d space.space_travel_schedule
+
+</br>
 \d space.space_trip
+
+</br>
 \d car.customer
+
+</br>
 \d car.order_header
 
+</br>
 CREATE TABLE space.dw_orders AS
 SELECT
     t.trip_id,
@@ -2642,10 +2717,13 @@ JOIN space.space_trip s ON t.trip_id = s.trip_id
 JOIN car.customer c ON s.customer_id = c.customer_id
 JOIN car.order_header o ON c.customer_id = o.customer_id;
 
+</br>
 CREATE INDEX dw_orders_idx_01 ON space.dw_orders (order_no, customer_id);
 
+</br>
 SELECT * FROM space.dw_orders;
 
+</br>
 COPY (
     SELECT
         t.trip_id,
@@ -2666,14 +2744,14 @@ COPY (
     JOIN car.order_header o ON c.customer_id = o.customer_id
 ) TO 'C:\Users\tony\dw_order.csv' WITH CSV HEADER;
 
-Note: change C:\Users\tony\ to your local path
+</br></br>
 
-
-
-p6.33
+p6.33</br>
 --connect to database about_x
+</br>
 \c about_x
 
+</br>
 SELECT
    trip_id, destination, departure_from,
    CASE
@@ -2683,24 +2761,27 @@ SELECT
    END AS price_category
 FROM space.space_travel_schedule;
 
+</br>
 SELECT
     order_no,
     COALESCE(delivery_address_1, delivery_address_2, delivery_address_3,  delivery_address_4, 'N/A') AS delivery_address
 FROM car.order_header
 LIMIT 1;
 
+</br>
 SELECT
     order_no, delivery_address_1, delivery_address_2, delivery_address_3,  delivery_address_4
 FROM car.order_header
 LIMIT 1;
 
+</br></br>
 
-
-p6.34
+p6.34</br>
 --connect to database about_x
+</br>
 \c about_x
 
-SELECT
+</br>SELECT
     p.product_id,
     p.product_name,
     p.sku,
@@ -2721,6 +2802,7 @@ GROUP BY
     p.category_id,
     p.price;
 
+</br>
 SELECT product_id, 'product_name' AS attribute, product_name AS value
 FROM   car.product
 UNION ALL
@@ -2744,20 +2826,24 @@ SELECT product_id, 'amount' AS attribute, amount::text AS value
 FROM car.order_detail
 WHERE amount IS NOT NULL;
 
+</br></br>
 
-
-
-p7.
+p7.</br>
 \c about_x
 
+</br>
 --Check the table structure
+</br>
 \d space.space_trip
+
+</br>
 \d car.order_header
 
+</br>
 
-
-p7.1
+p7.1</br>
 --Insert sample data – a new customer
+</br>
 INSERT INTO car.customer (
  customer_id, title, first_name, middle_name, last_name, email, phone, address_1,  address_2, address_3, address_4,city, country, postal_code, 
  tweeter_account_id)
@@ -2765,15 +2851,20 @@ VALUES (
  'C230000002', 'Mr.', 'David', 'M', 'Lee', 'david@davidtest.com', '+01-98765432', 
  'Unit 33, Eight Street', NULL, NULL, NULL, 'Los Angeles', 'USA', '934567', '@davidmlee');
 
+</br>
 --Insert sample data – a new space trip booking
-INSERT INTO space.space_trip (trip_id, customer_id, fee, amount_paid)
+</br>INSERT INTO space.space_trip (trip_id, customer_id, fee, amount_paid)
 VALUES ('S000000002', 'C230000002', '1,000,000.00', '1,00,000.00');
 
+</br>
 SELECT trip_id, customer_id, fee FROM space.space_trip;
 
+</br>
 SELECT order_no, customer_id, order_net_total FROM car.order_header;
 
+</br>
 --Inner Join
+</br>
 SELECT st.trip_id, st.fee AS trip_amount,
        c.customer_id,
        oh.order_no AS car_order_id, oh.order_net_total AS car_order_amount
@@ -2781,7 +2872,9 @@ FROM  space.space_trip st
 INNER JOIN car.customer c ON st.customer_id = c.customer_id
 INNER JOIN car.order_header oh ON c.customer_id = oh.customer_id;
 
+</br>
 --Inner join, try again 
+</br>
 SELECT st.trip_id, st.fee AS trip_amount,
        c.customer_id,
        oh.order_no AS car_order_id, oh.order_net_total AS car_order_amount
@@ -2789,10 +2882,11 @@ FROM space.space_trip st
 JOIN car.customer c ON st.customer_id = c.customer_id
 JOIN car.order_header oh ON c.customer_id = oh.customer_id;
 
+</br></br>
 
-
-p7.2
+p7.2</br>
 --Full Outer Join
+</br>
 SELECT st.trip_id, st.fee AS trip_amount,
        c.customer_id,
        oh.order_no AS car_order_id, oh.order_net_total AS car_order_amount
@@ -2800,8 +2894,9 @@ FROM  space.space_trip st
 FULL OUTER JOIN car.customer c ON st.customer_id = c.customer_id
 FULL OUTER JOIN car.order_header oh ON c.customer_id = oh.customer_id;
 
-
+</br>
 --Full Outer Join – improved version
+</br>
 SELECT 
     CASE
         WHEN st.trip_id IS NOT NULL THEN st.trip_id
@@ -2824,10 +2919,11 @@ FROM  space.space_trip st
 FULL OUTER JOIN car.customer c ON st.customer_id = c.customer_id
 FULL OUTER JOIN car.order_header oh ON c.customer_id = oh.customer_id;
 
+</br></br>
 
-
-p7.3
+p7.3</br>
 --Left Outer Join 
+</br>
 SELECT 
     CASE
         WHEN st.trip_id IS NOT NULL THEN st.trip_id
@@ -2850,10 +2946,11 @@ FROM  space.space_trip st
 LEFT OUTER JOIN car.customer c ON st.customer_id = c.customer_id
 LEFT OUTER JOIN car.order_header oh ON c.customer_id = oh.customer_id;
 
+</br></br>
 
-
-p7.4
+p7.4</br>
 --Right Outer Join 
+</br>
 SELECT 
     CASE
         WHEN st.trip_id IS NOT NULL THEN st.trip_id
@@ -2877,7 +2974,7 @@ RIGHT OUTER JOIN car.customer c ON st.customer_id = c.customer_id
 RIGHT OUTER JOIN car.order_header oh ON c.customer_id = oh.customer_id
 ORDER BY c.customer_id;
 
-
+</br>
 WITH 
 trip_amounts AS (
     SELECT    st.customer_id,
@@ -2907,8 +3004,9 @@ LEFT JOIN trip_amounts ta ON c.customer_id = ta.customer_id
 LEFT JOIN car_order_amounts coa ON c.customer_id = coa.customer_id
 ORDER BY  c.customer_id;
 
-
+</br>
 --Try again- use RIGHT JOIN
+</br>
 WITH 
 trip_amounts AS (
     SELECT    st.customer_id,
@@ -2938,9 +3036,9 @@ RIGHT JOIN trip_amounts ta ON c.customer_id = ta.customer_id
 RIGHT JOIN car_order_amounts coa ON c.customer_id = coa.customer_id
 ORDER BY  c.customer_id;
 
+</br></br>
 
-
-p7.5
+p7.5</br>
 WITH order_accumulation AS (
      SELECT
         DATE_TRUNC('day', oh.order_dtm) AS order_date,
@@ -2957,53 +3055,63 @@ SELECT
 FROM order_accumulation
 ORDER BY order_date;
 
-
+</br>
 --Below is the order detail
 SELECT oh.order_dtm, od.amount, od.qty 
 FROM car.order_detail od 
 JOIN car.order_header oh ON od.order_no = oh.order_no order by oh.order_dtm;
 
+</br></br>
 
-
-p7.6
+p7.6</br>
 --Understand the data - product
+</br>
 SELECT COUNT(1) FROM car.product;
 
+</br>
 --Understand the data – category
+</br>
 SELECT COUNT(1) FROM car.category;
 
+</br>
 SELECT c.category_id, c.description, p.product_id, p.product_name
 FROM car.category c
 CROSS JOIN car.product p;
 
+</br>
 SELECT c.category_id, c.description, p.product_id, p.product_name
 FROM car.category c
 FULL OUTER JOIN car.product p ON c.category_id = p.category_id;
 
+</br>
 -- Insert sample data
+</br>
 INSERT INTO car.category (category_id, description)
 VALUES ('CT000006', 'Extra Battery');
 
+</br>
 SELECT c.category_id, c.description, p.product_id, p.product_name
 FROM car.category c
 FULL OUTER JOIN car.product p ON c.category_id = p.category_id;
 
+</br>
 SELECT c.category_id, c.description, p.product_id, p.product_name
 FROM  car.category c
 CROSS JOIN car.product p;
 
+</br></br>
 
-
-p7.7
+p7.7</br>
 SELECT cd1.category_id, cd1.designer
 FROM car.category_designer cd1
 INNER JOIN car.category_designer cd2 ON cd1.category_id = cd2.category_id AND 
            cd1.designer != cd2.designer;
 
+</br></br>
 
-
-p8.
+p8.</br>
 --Sample SQL
+</br>
 WITH 
 trip_amounts AS (
     SELECT    st.customer_id,
@@ -3033,10 +3141,11 @@ LEFT JOIN trip_amounts ta ON c.customer_id = ta.customer_id
 LEFT JOIN car_order_amounts coa ON c.customer_id = coa.customer_id
 ORDER BY  c.customer_id;
 
+</br></br>
 
-
-p8.1
+p8.1</br>
 --Analyze this query, using EXPLAIN
+</br>
 EXPLAIN
 WITH 
 trip_amounts AS (
@@ -3067,10 +3176,11 @@ LEFT JOIN trip_amounts ta ON c.customer_id = ta.customer_id
 LEFT JOIN car_order_amounts coa ON c.customer_id = coa.customer_id
 ORDER BY  c.customer_id;
 
+</br></br>
 
-
-p8.2
+p8.2</br>
 --Analyze this query, using EXPLAIN
+</br>
 EXPLAIN ANALYSE
 WITH 
 trip_amounts AS (
@@ -3101,10 +3211,11 @@ LEFT JOIN trip_amounts ta ON c.customer_id = ta.customer_id
 LEFT JOIN car_order_amounts coa ON c.customer_id = coa.customer_id
 ORDER BY  c.customer_id;
 
+</br></br>
 
-
-p8.3
+p8.3</br>
 --Query 1:
+</br>
 EXPLAIN ANALYSE
 SELECT
 COALESCE(SUM(st.fee::money), '0.00'::money) AS total_trip_amount,
@@ -3116,8 +3227,9 @@ LEFT JOIN car.order_header oh ON c.customer_id = oh.customer_id
 GROUP BY c.customer_id
 ORDER BY c.customer_id;
 
-
+</br>
 --Query 2:
+</br>
 EXPLAIN ANALYSE
 WITH 
 trip_amounts AS (
@@ -3137,9 +3249,9 @@ LEFT JOIN trip_amounts ta ON c.customer_id = ta.customer_id
 LEFT JOIN car_order_amounts coa ON c.customer_id = coa.customer_id
 ORDER BY c.customer_id;
 
+</br></br>
 
-
-p8.4
+p8.4</br>
 SELECT
     st.trip_id,
     st.customer_id,
@@ -3151,10 +3263,11 @@ WHERE
     oh.order_net_total > '$10000'::money  -- Pushed down to the source
     AND st.fee > '$100'::money;           -- Pushed down to the source
 
+</br></br>
 
-
-p8.5
+p8.5</br>
 --Create 1.2 million sample data in few minutes
+</br>
 INSERT INTO car.tweet (
     tweet_message_id, tweeter_account_id, content, publish_dtm, image, video, url)
 SELECT
@@ -3167,61 +3280,84 @@ SELECT
     null AS url
 FROM GENERATE_SERIES (1, 1200000);
 
+</br>
 -- Enable parallel query and increase the number of parallel workers, and analyze it
+</br>
 SET max_parallel_workers = 4;  -- Adjust the number as needed
+
+</br>
 SET max_parallel_workers_per_gather = 4;  -- Adjust the number as needed
 
+</br>
 EXPLAIN
 SELECT tweet_message_id, tweeter_account_id
 FROM car.tweet
 WHERE publish_dtm >= '2023-01-01'::timestamp
 ORDER BY publish_dtm;
 
+</br>
 --Drop an index to see the execution plan without index
+</br>
 DROP INDEX car.tweet_idx_02;
 
+</br>
 --Try again
+</br>
 SET max_parallel_workers = 4;  -- Adjust the number as needed
+</br>
 SET max_parallel_workers_per_gather = 4;  -- Adjust the number as needed
 
+</br>
 EXPLAIN ANALYSE
 SELECT tweet_message_id, tweeter_account_id
 FROM car.tweet
 WHERE publish_dtm >= '2023-09-10 15:25:46.329222'::timestamp
 ORDER BY publish_dtm;
 
+</br>
 --Rebuild the index to see the execution plan improved
+</br>
 CREATE INDEX CONCURRENTLY tweet_idx_02 ON car.tweet (publish_dtm, tweet_message_id, tweeter_account_id);
 
+</br>
 SET max_parallel_workers = 4;  -- Adjust the number as needed
+
+</br>
 SET max_parallel_workers_per_gather = 4;  -- Adjust the number as needed
 
+</br>
 EXPLAIN ANALYSE
 SELECT tweet_message_id, tweeter_account_id
 FROM car.tweet
 WHERE publish_dtm >= '2023-09-10 15:25:46.329222'::timestamp
 ORDER BY publish_dtm;
 
+</br></br>
 
-
-p8.6
+p8.6</br>
 -- Create a materialized view to store the total order amount for each customer
+</br>
 CREATE MATERIALIZED VIEW customer_total_order_amount AS
 SELECT c.customer_id, SUM(oh.order_net_total::numeric) AS total_order_amount
 FROM car.customer c
 JOIN car.order_header oh ON c.customer_id = oh.customer_id
 GROUP BY c.customer_id;
 
+</br>
 -- Refresh the materialized view to update its data (you can schedule this as needed)
+</br>
 REFRESH MATERIALIZED VIEW customer_total_order_amount;
 
+</br>
 -- Query the materialized view to get total order amounts for customers
+</br>
 SELECT * FROM customer_total_order_amount;
 
+</br></br>
 
-
-p8.7
+p8.7</br>
 -- Using IN subquery to find customers who have placed orders
+</br>
 SELECT c.customer_id, c.first_name, c.last_name
 FROM car.customer c
 WHERE c.customer_id IN (
@@ -3229,7 +3365,9 @@ WHERE c.customer_id IN (
     FROM car.order_header oh
 );
 
+</br>
 -- Using EXISTS subquery to find customers who have placed orders
+</br>
 SELECT c.customer_id, c.first_name, c.last_name
 FROM car.customer c
 WHERE EXISTS (
@@ -3238,226 +3376,314 @@ WHERE EXISTS (
     WHERE oh.customer_id = c.customer_id
 );
 
+</br></br>
 
-
-p8.8
+p8.8</br>
 \d car.tweet
 
+</br>
 --How to reindex all indexes of a table.  Note: This will lock the table
+</br>
 REINDEX TABLE car.tweet;
 
+</br>
 --Reindex a specific index and use CONCURRENTLY.  Note: This will NOT lock the table
+</br>
 REINDEX INDEX CONCURRENTLY car.tweet_idx_02;
 
+</br></br>
 
-
-p8.9
-(session 1)
+p8.9</br>
+--(session 1)
 \c about_x
 
+</br>
 -- Start Transaction A
+</br>
 BEGIN;
 
+</br>
 -- Attempt to update customer C00000001
+</br>
 UPDATE car.customer
 SET first_name = 'NewFirstNameA'
 WHERE customer_id = 'C00000001';
 
+</br>
 -- Pause Transaction A (do not commit)
+</br>
 
+</br></br>
 
-(seesion 2)
+--(seesion 2)
+</br>
 \c about_x
 
+</br>
 -- Start Transaction B
+</br>
 BEGIN;
 
+</br>
 -- Attempt to update customer C00000002
 UPDATE car.customer
 SET first_name = 'NewFirstNameB'
 WHERE customer_id = 'C00000002';
 
+</br>
 -- Pause Transaction B (do not commit)
+</br>
 
+</br></br>
 
-(seesion 3)
+--(seesion 3)
+</br>
 \c about_x
 
+</br>
 --Deadlock Detection
+</br>
 SELECT blocked.query AS blocked_query, waiting.query AS blocking_query
 FROM pg_stat_activity AS blocked
 JOIN pg_stat_activity AS waiting ON waiting.pid = blocked.pid
 WHERE blocked.query <> '<IDLE>' AND waiting.query <> '<IDLE>';
 
-
-(session 1)
+</br></br>
+--(session 1)
+</br>
 ROLLBACK;
 
-(session 2) 
+</br></br>
+--(session 2) 
+</br>
 ROLLBACK;
 
-(seesion 3)
+</br></br>
+--(seesion 3)
+</br>
 \c about_x
+
+</br>
 --Deadlock Detection
+</br>
 SELECT blocked.query AS blocked_query, waiting.query AS blocking_query
 FROM pg_stat_activity AS blocked
 JOIN pg_stat_activity AS waiting ON waiting.pid = blocked.pid
 WHERE blocked.query <> '<IDLE>' AND waiting.query <> '<IDLE>';
 
+</br></br>
 
-
-p.9
+p.9</br>
 (Please refer to the book)
 
-
-
-p10.
+p10.</br>
 \c about_x
+
+</br>
 --Configure the data masking
+</br>
 CREATE EXTENSION IF NOT EXISTS anon CASCADE;
   
-NOTICE:  installing required extension "pgcrypto"
-CREATE EXTENSION
+</br>
+--NOTICE:  installing required extension "pgcrypto"
+</br>
 
+</br>
 --Start data masking extension
+</br>
 SELECT anon.start_dynamic_masking();  
 
+</br>
 --Create a test account (a role) named test01 who can only get the masked data
+</br>
 CREATE ROLE test01 LOGIN;
 
+</br>
 --apply the masking to test01
+</br>
 SECURITY LABEL FOR anon ON ROLE test01 IS 'MASKED'; 
 
+</br>
 --Create a sample table
+</br>
 CREATE TABLE info ( name varchar(30), passport_id varchar(15) );
 
+</br>
 --Insert 2 sample records into the table
+</br>
 INSERT INTO info VALUES ('Mr. Andrew Big ', 'A123456(1)');
+
+</br>
 INSERT INTO info VALUES ('Miss Beautiful White', 'B234567(2)');
 
+</br>
 SELECT name, passport_id FROM info;
 
+</br>
 --Set masking
+</br>
 SECURITY LABEL FOR anon ON COLUMN info.passport_id IS 'MASKED WITH FUNCTION anon.partial(passport_id,5,$$***$$,0)';
 
+</br>
 --Login psql as user: test01, from command prompt of Linux
+</br>
 psql -U test01 
 
+</br>
 --Select the records using standard SELECT SQL
+</br>
 SELECT name, passport_id FROM info;
 
-
+</br>
 psql -U postgres
+
+</br>
 --To unmask the secure label for a role:
+</br>
 SECURITY LABEL FOR anon ON ROLE test01 IS NULL;
 
+</br>
 --To disable the mask:
+</br>
 SELECT anon.stop_dynamic_masking();
 
+</br></br>
 
-
-p10.1
+p10.1</br>
 --Connect to your database
-\c about_x
+</br>\c about_x
 
+</br>
 SELECT customer_id, city 
 FROM car.customer 
 WHERE customer_id = '105' OR 1=1;
 
+</br></br>
 
-
-p10.2
+p10.2</br>
 PREPARE safe_query (text) AS
 SELECT  customer_id, city
 FROM    car.customer
 WHERE   customer_id = $1;
+
+</br>
 --Execute the prepared statement with user input
+</br>
 EXECUTE safe_query('105');
 
+</br>
 EXECUTE safe_query('105 OR 1=1');
+
+</br>
 EXECUTE safe_query('1=1');
+
+</br>
 EXECUTE safe_query('C00000001');
 
+</br>
 DEALLOCATE safe_query;
 
+</br></br>
 
-
-p10.3
+p10.3</br>
 \c about_x
 
+</br>
 --Enable pgcrypto extension in database of about_x
+</br>
 CREATE EXTENSION pgcrypto;
 
+</br>
 --Drop the column if it exists
+</br>
 ALTER TABLE car.customer DROP COLUMN IF EXISTS social_security_no;
 
+</br>
 --Add the column as bytea
+</br>
 ALTER TABLE car.customer ADD COLUMN social_security_no BYTEA;
 
+</br>
 \d car.customer
 
+</br>
 UPDATE car.customer
 SET social_security_no =  ENCODE(DIGEST('11111111111'::TEXT, 'sha256'::TEXT), 'HEX'::TEXT)::BYTEA
 WHERE customer_id = 'C230000003';
 
+</br>
 SELECT social_security_no FROM car.customer WHERE customer_id = 'C230000003';
 
+</br>
 SELECT customer_id, social_security_no
 FROM  car.customer 
 WHERE social_security_no = 
       ENCODE(DIGEST('11111111111'::TEXT, 'sha256'::TEXT), 'HEX'::TEXT)::BYTEA;
 
-
+</br>
 UPDATE car.customer
 SET social_security_no = HMAC('222222222'::BYTEA, 'MY_SECRET_KEY'::BYTEA, 'sha256')
 WHERE customer_id = 'C230000002';
 
+</br>
 SELECT customer_id, social_security_no 
 FROM car.customer
 WHERE customer_id = 'C230000002';
 
+</br>
 SELECT customer_id, social_security_no
 FROM  car.customer 
 WHERE social_security_no = HMAC('222222222'::BYTEA, 'MY_SECRET_KEY'::BYTEA, 'sha256');
 
+</br></br>
 
-
-p10.4
+p10.4</br>
 --Connect to your database
+</br>
 \c about_x
 
+</br>
 --Enable pgcrypto extension in database of about_x
+</br>
 CREATE EXTENSION pgcrypto;
 
+</br>
 UPDATE car.customer
 SET social_security_no = PGP_SYM_ENCRYPT('333333333', 'MY_SECRET_KEY')
 WHERE customer_id = 'C230000001';
 
+</br>
 SELECT customer_id, social_security_no 
 FROM car.customer
 WHERE customer_id = 'C230000001';
 
+</br>
 -- Decrypt the data
+</br>
 SELECT customer_id, 
        PGP_SYM_DECRYPT(social_security_no, 'MY_SECRET_KEY') as social_security_no
 FROM car.customer
 WHERE customer_id = 'C230000001';
 
+</br></br>
 
-
-p10.5
+p10.5</br>
 (please refer to the book)
 
+</br></br>
 
-
-p10.6
+p10.6</br>
 --Connect to your database
 \c about_x
 
+</br>
 --Enable pgcrypto extension in database of about_x
+</br>
 CREATE EXTENSION pgcrypto;
 
+</br>
 --Create a new sample record to car.customer
+</br>
 INSERT INTO car.customer (
  customer_id, title, first_name, middle_name, last_name,
  email, phone,  
@@ -3471,8 +3697,9 @@ VALUES (
  'Los Angeles', 'USA', '9345678',
  '@petertest');
 
-
+</br>
 --Store the Social Security Number which is encrypted 
+</br>
 UPDATE car.customer
 SET social_security_no = 
  PGP_PUB_ENCRYPT('444444444', DEARMOR('
@@ -3485,13 +3712,14 @@ SET social_security_no =
 '))
 WHERE customer_id = 'C230000004';
 
-
+</br>
 SELECT customer_id, social_security_no
 FROM car.customer 
 WHERE customer_id = 'C230000004';
 
-
+</br>
 --Decrypt the value if you have the decryption key
+</br>
 SELECT customer_id, CONVERT_FROM(
     PGP_PUB_DECRYPT_BYTEA (social_security_no, DEARMOR('
 
@@ -3506,5 +3734,5 @@ SELECT customer_id, CONVERT_FROM(
 FROM  car.customer
 WHERE customer_id = 'C230000004';
 
-
-### END ### 
+</br>
+## END ##

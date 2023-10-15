@@ -8,7 +8,7 @@ The Book is published on Amazon </br>
 
 [https://www.amazon.com/SQL-Certification-Expert-Insights-Practice-ebook/dp/B0CJG5DZ52/ref=sr_1_50?crid=1DFJZY2ZP98Q7&keywords=SQL&qid=1695604933&sprefix=s%2Caps%2C300&sr=8-50](https://www.amazon.com/dp/B0CL2JND72/ref=sr_1_8?keywords=postgresql+16&qid=1697330833&sr=8-8)
 
-</br></br></br>
+</br></br>
 
 B. SQL up and running: </br>
 
@@ -17,9 +17,9 @@ https://github.com/EmblocSoft/PostgreSQL
 and download the graphical installer program. This easy-to-use tool will equip you with everything you need to dive into the world of SQL and 
 start building your database skills in no time!
 
+</br></br>
 
-
-C. Practices</br></br>
+C. Practices</br>
 
 p1.1 & p1.2</br>
 -- To create a new database

@@ -52,6 +52,7 @@ INSERT INTO t1 VALUES
 (6, -51.40, 0.00);
 
 </br>
+
 SELECT i, SUM(d1) AS a, SUM(d2) AS b
 FROM t1 
 GROUP BY i 
@@ -59,6 +60,7 @@ HAVING SUM(d1) <> SUM(d2)
 ORDER BY i;
 
 </br>
+
 SELECT   i, SUM(d1) AS a, SUM(d2) AS b
 FROM     t1 
 GROUP BY i 

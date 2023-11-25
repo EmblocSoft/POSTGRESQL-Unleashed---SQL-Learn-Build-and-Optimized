@@ -23,7 +23,6 @@ C. Practices
 
 p1.1 & p1.2
 </br>
--- To create a new database</br>
 CREATE DATABASE my_db; 
 </br>
 
@@ -356,9 +355,12 @@ SELECT
       my_timestamp_3 - my_timestamp_0        AS t1_duration
 FROM  t2
 WHERE my_int = 15;
+
 </br></br>
 SELECT TO_CHAR(INTERVAL '3 Hours 20 Minutes 8 Seconds', 'HH12:MI:SS') AS timing;
+
 SELECT (INTERVAL '1 Year 2 Months 1 Day 3 Hours 20 Minutes 1 Second') AS timing;
+
 </br></br>
 SELECT EXTRACT(HOURS FROM INTERVAL '1 Year 2 Months 1 Day 3 Hours 20 Minutes 1 Second') 
 AS timing;
@@ -890,12 +892,9 @@ CREATE SCHEMA common;
 
 
 p3.1</br>
--- Create the ENUM about allowed values of title
 </br>
 CREATE TYPE ENUM_TITLE AS ENUM ('Mr.', 'Ms.', 'Mrs.', 'Dr.', 'Prof.');
 
-</br>
--- Create the Shareholder table under the common schema
 </br>
 CREATE TABLE common.shareholder (
     shareholder_id VARCHAR(10) PRIMARY KEY,
@@ -915,8 +914,6 @@ CREATE TABLE common.shareholder (
 );
 
 </br>
--- Create indexes
-</br>
 CREATE INDEX shareholder_idx_01 ON common.shareholder (shareholder_id);
 CREATE INDEX shareholder_idx_02 ON common.shareholder (first_name, last_name, shareholder_id);
 </br></br>
@@ -934,7 +931,6 @@ VALUES(
 </br></br>
 
 p3.2</br>
--- Create the Shareholder Registry table under the common schema
 </br>
 CREATE TABLE common.shareholder_registry (
     company        VARCHAR(50) NOT NULL,
@@ -945,12 +941,8 @@ CREATE TABLE common.shareholder_registry (
 );
 
 </br>
--- Create index
-</br>
 CREATE INDEX share_reg_idx_01 ON common.shareholder_registry (company, shareholder_id);
 
-</br>
--- Insert sample data
 </br>
 INSERT INTO common.shareholder_registry (
  company, shareholder_id, shares)
@@ -974,7 +966,7 @@ JOIN common.shareholder_registry sr ON s.shareholder_id = sr.shareholder_id;
 </br></br>
 
 p3.3</br>
--- Create the xSpace Travel Schedule table under the space schema
+
 </br>
 CREATE TABLE space.space_travel_schedule (
     trip_id        VARCHAR(10) PRIMARY KEY,
@@ -994,8 +986,6 @@ CREATE INDEX space_idx_01 ON space.space_travel_schedule (trip_id);
 CREATE INDEX space_idx_02 ON space.space_travel_schedule (destination, trip_id);
 
 </br>
--- Insert sample data
-</br>
 INSERT INTO space.space_travel_schedule (
  trip_id, destination, departure_from,
  departure_dtm, return_dtm, price)
@@ -1006,7 +996,7 @@ VALUES (
 </br></br>
 
 p3.4</br>
--- Create the Customer table under the car schema
+
 </br>
 CREATE TABLE car.customer (	 
     customer_id VARCHAR(20) PRIMARY KEY,
@@ -1026,13 +1016,11 @@ CREATE TABLE car.customer (
     tweeter_account_id VARCHAR(64)
 );
 
-</br>
--- Create index
+
 </br>
 CREATE INDEX customer_idx_01 ON car.customer (customer_id);
 
-</br>
--- Insert sample data
+
 </br>
 INSERT INTO car.customer (
  customer_id, title, first_name, middle_name, last_name,
@@ -1050,7 +1038,7 @@ VALUES (
 </br></br>
 
 p3.5</br>
--- Create the Space Trip table under the space schema
+
 </br>
 CREATE TABLE space.space_trip (
     trip_id     VARCHAR(10) PRIMARY KEY,
@@ -1060,16 +1048,14 @@ CREATE TABLE space.space_trip (
     FOREIGN KEY (customer_id) REFERENCES car.customer(customer_id)
 );
 
-</br>
--- Create indexes
+
 </br>
 CREATE INDEX trip_idx_01 ON space.space_trip (trip_id, customer_id);
 
 </br>
 CREATE INDEX trip_idx_02 ON space.space_trip (customer_id, trip_id);
 
-</br>
--- Insert sample data
+
 </br>
 INSERT INTO space.space_trip (trip_id, customer_id, fee, amount_paid)
 VALUES ('S000000001', 'C230000001', '1,000,000.00', '900,000.00');
@@ -1092,21 +1078,17 @@ CREATE TABLE car.category (
     description TEXT NOT NULL
 );
 
-</br>
--- Create the Product Category table under the car schema
+
 </br>
 CREATE TABLE car.category (
     category_id VARCHAR(20) PRIMARY KEY,
     description TEXT NOT NULL
 );
 
-</br>
--- Create index
+
 </br>
 CREATE INDEX category_idx_01 ON car.category (category_id);
 
-</br>
--- Insert sample data
 </br>
 INSERT INTO car.category (category_id, description)
 VALUES ('CT000001', 'Advanced model');
@@ -1114,7 +1096,7 @@ VALUES ('CT000001', 'Advanced model');
 </br></br>
 
 p3.7</br>
--- Create the Category Designer table under the car schema
+
 </br>
 CREATE TABLE car.category_designer (
     category_id VARCHAR(20) REFERENCES car.category (category_id),
@@ -1122,8 +1104,6 @@ CREATE TABLE car.category_designer (
     PRIMARY KEY (category_id, designer)
 );
 
-</br>
--- PRIMARY KEY (category_id, designer):  specifies that the combination of the category_id and designer columns will be the primary key
 </br>
 CREATE INDEX category_designer_idx_01 ON car.category_designer (category_id, designer);
 
@@ -1138,7 +1118,7 @@ VALUES ('CT000001', 'Antonia');
 </br></br>
 
 p3.8</br>
--- Create the Product table under the car schema
+
 </br>
 CREATE TABLE car.product (
     product_id   VARCHAR(20) PRIMARY KEY,
@@ -1151,8 +1131,7 @@ CREATE TABLE car.product (
     FOREIGN KEY (category_id) REFERENCES car.category(category_id)
 );
 
-</br>
--- Create indexes
+
 </br>
 CREATE INDEX product_idx_01 ON car.product (product_id);
 
@@ -1162,8 +1141,7 @@ CREATE INDEX product_idx_02 ON car.product (category_id, product_id);
 </br>
 CREATE INDEX product_idx_03 ON car.product (origin, product_id);
 
-</br>
--- Insert sample data
+
 </br>
 INSERT INTO car.product (
  product_id, product_name, sku, origin, color,
@@ -1205,7 +1183,7 @@ JOIN car.category_designer cd ON p.category_id = cd.category_id;
 </br></br>
 
 p3.9</br>
--- Create the Order Header table under the car schema
+
 </br>
 CREATE TABLE car.order_header (
     order_no           VARCHAR(20) NOT NULL,
@@ -1221,11 +1199,8 @@ CREATE TABLE car.order_header (
 );
 
 </br>
--- Create index
 CREATE INDEX order_header_idx_01 ON car.order_header (order_no, customer_id);
 
-</br>
--- Insert sample data
 </br>
 INSERT INTO car.order_header (
     order_no, customer_id, order_dtm, delivery_address_1, 
@@ -1237,7 +1212,7 @@ VALUES (
 </br></br>
 
 p3.10</br>
--- Create the Order Detail table under the car schema
+
 </br>
 CREATE TABLE car.order_detail (
     order_no   VARCHAR(20) NOT NULL,
@@ -1248,13 +1223,11 @@ CREATE TABLE car.order_detail (
     PRIMARY KEY (order_no, product_id)
 );
 
-</br>
--- Create index
+
 </br>
 CREATE INDEX order_detail_idx_01 ON car.order_detail (order_no, product_id);
 
-</br>
--- Insert sample data
+
 </br>
 INSERT INTO car.order_detail (order_no, product_id, qty, unit_price, amount)
 VALUES ('OR2023000001', 'P00000001', 2, 39999.99, 79999.98);
@@ -1262,11 +1235,11 @@ VALUES ('OR2023000001', 'P00000001', 2, 39999.99, 79999.98);
 </br></br>
 
 p3.11</br>
+
 ALTER TABLE car.customer
 ADD CONSTRAINT customer_tweeter_account_id_unique UNIQUE (tweeter_account_id);
 
-</br>
--- Create the Tweets table under the car schema
+
 </br>
 CREATE TABLE car.tweet (
     tweet_message_id   VARCHAR(64) PRIMARY KEY,
@@ -1278,13 +1251,11 @@ CREATE TABLE car.tweet (
     url                VARCHAR(100)
 );
 
-</br>
--- Create index
+
 </br>
 CREATE INDEX tweet_idx_01 ON car.tweet (tweet_message_id, tweeter_account_id);
 
-</br>
--- Insert sample data
+
 </br>
 INSERT INTO car.tweet (
  tweet_message_id, tweeter_account_id, 
@@ -1298,7 +1269,7 @@ VALUES (
 </br></br>
 
 p4.</br>
---Connect to your new database, about_x
+
 </br>
 \c about_x
 
@@ -1336,7 +1307,7 @@ VALUES (1, 1, 'Details for Item A'),
 </br></br>
 
 p4.1</br>
---Connect to your new database, about_x
+
 </br>
 \c about_x
 
@@ -1380,12 +1351,10 @@ DROP TABLE t6 CASCADE;
 </br></br>
 
 p4.4</br>
---Connect to database about_x
+
 </br>
 \c about_x
 
-</br>
---Create a new index set the order by publish date, then by account by message 
 </br>
 CREATE INDEX CONCURRENTLY tweet_idx_02 ON car.tweet (publish_dtm, tweeter_account_id, tweet_message_id);
 
@@ -1394,13 +1363,11 @@ CREATE INDEX CONCURRENTLY tweet_idx_02 ON car.tweet (publish_dtm, tweeter_accoun
 p4.5</br>
 ALTER INDEX car.tweet_idx_02 RENAME TO tweet_idx_02a;
 
-</br>
--- Drop the existing index</br>
+
 </br>
 DROP INDEX car.tweet_idx_02a;
 
-</br>
--- Create a new index with additional columns</br>
+
 </br>
 CREATE INDEX CONCURRENTLY tweet_idx_02 ON car.tweet (publish_dtm, tweet_message_id, tweeter_account_id);
 
@@ -1421,8 +1388,7 @@ JOIN space.space_travel_schedule sch ON st.trip_id = sch.trip_id;
 </br>
 SELECT * FROM space_trip_details LIMIT 1;
 
-</br>
---Add new column to view: drop the view and create view again</br>
+
 </br>
 DROP VIEW space_trip_details;
 
@@ -1444,17 +1410,15 @@ DROP VIEW space_trip_details;
 </br></br>
 
 p4.7</br>
--- Order number column</br>
+
 </br>
 COMMENT ON COLUMN car.order_header.order_no IS 'Unique identifier for each order.';
 
-</br>
--- Discount rate column</br>
+
 </br>
 COMMENT ON COLUMN car.order_header.discount_rate IS 'Percentage discount applied to the whole order.';
 
-</br>
--- Order net total column</br>
+
 </br>
 COMMENT ON COLUMN car.order_header.order_net_total IS 'Total net amount of the order after discounts, = SUM(order_detail.amount) - SUM(order_detail.amount) * order_header.discount_rate ';
 
@@ -1588,8 +1552,7 @@ WHEN NOT MATCHED THEN
 </br>
 SELECT * FROM car.tweet WHERE tweet_message_id = 'T000000003';
 
-</br>
---let us change some sample values, and run the MERGER again</br>
+
 </br>
 MERGE INTO car.tweet AS target
 USING (
@@ -1634,8 +1597,7 @@ CREATE TABLE car.tweet_shared (
     url                VARCHAR(100)
 );
 
-</br>
---Let us truncate the source table and insert new records into it again
+
 </br>
 TRUNCATE car.tweet;
 
@@ -1667,8 +1629,7 @@ VALUES (
  'https://www.youtube.com/watch?v=T000000003', 
  'https://twitter.com/your_username/status/T000000003');
 
-</br>
--- Synchronize these two tables</br>
+
 </br>
 INSERT INTO car.tweet_shared (
   tweet_message_id, tweeter_account_id, content, publish_dtm, image, video, url)
@@ -1707,8 +1668,7 @@ SELECT * FROM car.tweet;
 </br>
 SELECT * FROM car.tweet_shared;
 
-</br>
---Delete a row in source and update a row in source table, then synchronize them again</br>
+
 </br>
 DELETE FROM car.tweet WHERE tweet_message_id = 'T000000001';
 
@@ -1739,8 +1699,7 @@ ON CONFLICT (tweet_message_id) DO UPDATE
         video = excluded.video,
         url = excluded.url;
 
-</br>
--- Delete records not present in the source</br>
+
 </br>
 DELETE FROM car.tweet_shared target
 WHERE NOT EXISTS (
@@ -1765,8 +1724,6 @@ BEGIN; -- Start the transaction
 
 
 </br>
--- Insert new record into order_header</br>
-</br>
 INSERT INTO car.order_header (
     order_no, customer_id, order_dtm, delivery_address_1, discount_rate, order_net_total
 )
@@ -1774,8 +1731,7 @@ VALUES (
     'O00000002', 'C230000001', '2023-08-15 14:00:00', '456 Elm St',  0.05,  113999.97
 );
 
-</br>
--- Insert corresponding record into order_detail</br>
+
 </br>
 INSERT INTO car.order_detail (
     order_no, product_id, qty, unit_price, amount
@@ -1785,7 +1741,6 @@ VALUES (
 );
 
 </br>
--- Commit the transaction if both inserts succeed
 COMMIT;
 
 </br>
@@ -1802,22 +1757,19 @@ p5.6</br>
 </br>
 BEGIN; -- Start the transaction
 
-</br>
---Update customer's address</br>
+
 </br>
 UPDATE car.customer
 SET    address_1 = '789 Oak St'
 WHERE  customer_id = 'C230000001';
 
-</br>
---Update order_header's delivery address</br>
+
 </br>
 UPDATE car.order_header
 SET    delivery_address_1 = '789 Oak St'
 WHERE  order_no = 'O00000002';
 
-</br>
---Commit the transaction if both updates succeed
+
 </br>
 COMMIT;
 
@@ -1833,7 +1785,7 @@ WHERE  order_no = 'O00000002';
 </br></br>
 
 p5.7</br>
---Connect to your new database, about_x
+
 </br>
 \c about_x
 
@@ -1843,7 +1795,7 @@ TRUNCATE t6;
 </br></br>
 
 p5.8</br>
---Connect to your new database, about_x
+
 </br>
 \c about_x
 
@@ -1856,17 +1808,17 @@ TRUNCATE t6 CASCADE;
 </br></br>
 
 p5.9</br>
---Connect to your new database, about_x</br>
+
 </br>
 \c about_x
 
 </br>
---Describe an existing table car.tweet</br>
+
 </br>
 \d car.tweet
 
 </br>
---Create a trigger on INSERT, which will prevent content is null
+
 </br>
 CREATE OR REPLACE FUNCTION prevent_null_content()
 RETURNS TRIGGER AS $$
@@ -1898,7 +1850,7 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER check_content_before_update BEFORE UPDATE ON car.tweet
 FOR EACH ROW EXECUTE FUNCTION prevent_null_content_update();
 
-</br>--Now let's test the TRIGGER on INSERT</br>
+
 </br>
 INSERT INTO car.tweet(
 tweet_message_id, tweeter_account_id, content, publish_dtm, image, video, url)
@@ -2017,12 +1969,9 @@ p6.3</br>
 \c about_x
 
 </br>
---Describe the table structure of car.product
-</br>
 \d car.product
 
-</br>
---Describe the table structure of car.category
+
 </br>
 \d car.category
 
@@ -2074,8 +2023,7 @@ LEFT JOIN OrderCounts oc ON c.customer_id = oc.customer_id;
 p6.6</br>
 \c about_x
 
-</br>
--- Inserting into car.customer
+
 </br>
 INSERT INTO car.customer (customer_id, title, first_name, middle_name, last_name, email, phone, address_1, address_2, address_3, address_4, city, country, postal_code, tweeter_account_id)
 VALUES
@@ -2085,8 +2033,7 @@ VALUES
     ('C00000004', 'Prof.', 'Emily', '', 'Brown', 'emily@example.com', '+5544332211', '101 Pine St', '', '', '', 'Citytown', 'Countryland', '45678', '@profemily'),
     ('C00000005', 'Mrs.', 'Daniel', '', 'Miller', 'daniel@example.com', '+3344556677', '222 Maple St', '', '', '', 'Suburbville', 'Countryland', '98765', '@mrsdaniel');
     
-</br>
--- Inserting into car.category
+
 </br>
 INSERT INTO car.category (category_id, description)
 VALUES
@@ -2096,8 +2043,6 @@ VALUES
     ('CT000004', 'Accessory'),
     ('CT000005', 'Cleaning Kid');
 
-</br>
--- Inserting into car.product
 </br>
 INSERT INTO car.product (product_id, product_name, sku, origin, color, category_id, price)
 VALUES
@@ -2119,9 +2064,7 @@ VALUES
     ('CT000005', 'Gary');
 
 </br>
--- Inserting into car.order_header
-I</br>
-NSERT INTO car.order_header (order_no, customer_id, order_dtm, delivery_address_1, discount_rate, order_net_total)
+INSERT INTO car.order_header (order_no, customer_id, order_dtm, delivery_address_1, discount_rate, order_net_total)
 VALUES
     ('OR00000001', 'C00000001', '2023-08-01', '123 Main St', 0.1, (4 * 39999.99) - (4 * 39999.99) * 0.1),
     ('OR00000002', 'C00000002', '2023-08-02', '456 Elm St', 0.05, (5 * 699.99) - (5 * 699.99) * 0.05),
@@ -2129,8 +2072,7 @@ VALUES
     ('OR00000004', 'C00000004', '2023-08-04', '101 Pine St', 0.15, (3 * 399.99) - (3 * 399.99) * 0.15),
     ('OR00000005', 'C00000005', '2023-08-05', '222 Maple St', 0.1, (2 * 69.99) - (2 * 69.99) * 0.1);
 
-</br>
--- Inserting into car.order_detail
+
 </br>
 INSERT INTO car.order_detail (order_no, product_id, qty, unit_price, amount)
 VALUES
@@ -2172,9 +2114,8 @@ ORDER BY cd.designer;
 </br></br>
 
 p6.7</br>
--- Create more sales data for year 2022
-</br>
--- Inserting into car.order_header
+
+
 </br>
 INSERT INTO car.order_header (order_no, customer_id, order_dtm, delivery_address_1, discount_rate, order_net_total)
 VALUES
@@ -2184,8 +2125,7 @@ VALUES
     ('2200000004', 'C00000004', '2022-07-04', '101 Pine St', 0.15, (1 * 399.99) - (1 * 399.99) * 0.15),
     ('2200000005', 'C00000005', '2022-07-05', '222 Maple St', 0.1, (1 * 69.99) - (1 * 69.99) * 0.1);
 
-</br>
--- Inserting into car.order_detail
+
 </br>
 INSERT INTO car.order_detail (order_no, product_id, qty, unit_price, amount)
 VALUES
@@ -2210,6 +2150,7 @@ ORDER BY p.product_id, order_year;
 </br></br>
 
 p6.8</br>
+
 SELECT designer, total_sales, ROW_NUMBER() OVER (ORDER BY total_sales DESC) AS sales_rank
 FROM (
     SELECT cd.designer, SUM(od.amount) AS total_sales
@@ -2372,7 +2313,7 @@ ORDER BY
 p6.17</br>
 \c about_x
 
---Create a new table with JSON Data type, we will JSON to store semi-structured data
+</br>
 CREATE TABLE car.tweet_comment (
     comment_id VARCHAR(64),
     comment_dtm TIMESTAMP(6),
@@ -2380,8 +2321,7 @@ CREATE TABLE car.tweet_comment (
     tweet_message_id VARCHAR(64) REFERENCES car.tweet(tweet_message_id)
 );
 
-</br>
---Insert more sample data
+
 </br>
 INSERT INTO car.tweet (tweet_message_id, tweeter_account_id, content, publish_dtm)
 VALUES
@@ -2409,12 +2349,11 @@ VALUES
 </br></br>
 
 p6.18</br>
---Select Tweet comments
+
 </br>
 SELECT comment_dtm, c.comment->>'text' as comments FROM car.tweet_comment c;
 
-</br>
---Select Tweet comments
+
 </br>
 SELECT comment_dtm, c.comment->>'text' as comments 
 FROM   car.tweet_comment c
@@ -2475,10 +2414,6 @@ p6.20</br>
 \c about_x
 
 </br>
---There are 12 tweets, only 2 of them contain valid URL
-</br>
---Retrieve records that contain valid URL
-</br>
 SELECT regexp_replace(url, E'[^https?://[^\s]+]', '', 'g') AS full_urls
 FROM   car.tweet
 WHERE  url ~ E'https?://[^\s]+';
@@ -2488,15 +2423,13 @@ WHERE  url ~ E'https?://[^\s]+';
 p6.21</br>
 \c about_x
 
-</br>
---Insert a sample record
+
 </br>
 INSERT INTO car.tweet (tweet_message_id, tweeter_account_id, content, publish_dtm)
 VALUES (
 'T20230907123456789', '@thomassbright', 'I have compared the products and found this one is interesting, feel free to contact me by email if you want know my comparison result, my email is thomas@mythomasbrighttest.com.', '2023-08-01 12:00:00');
 
-</br>
---Extract email address from free form text
+
 </br>
 SELECT 
  REGEXP_MATCHES(content, E'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}', 'g') AS   
@@ -2566,32 +2499,27 @@ WHERE  TO_TSVECTOR('english', comment->>'text') @@ TO_TSQUERY('Super');
 p6.27</br>
 \c about_x
 
-</br>
--- Inserting a tweet with hexadecimal data
+
 </br>
 INSERT INTO car.tweet (tweet_message_id, tweeter_account_id, content, publish_dtm)
 VALUES ('tweet011', '@thomassbright', E'\\x48656c6c6f20776f726c6421', '2023-08-01 12:00:00');
 
-</br>
--- Inserting another tweet with hexadecimal data
+
 </br>
 INSERT INTO car.tweet (tweet_message_id, tweeter_account_id, content, publish_dtm)
 VALUES ('tweet012', '@thomassbright', E'\\x5468697320697320616e6f7468657220747765657421', '2023-08-02 12:00:00');
 
-</br>
--- Inserting a tweet with regular text content
+
 </br>
 INSERT INTO car.tweet (tweet_message_id, tweeter_account_id, content, publish_dtm)
 VALUES ('tweet013', '@thomassbright', 'This is a regular text tweet.', '2023-08-03 12:00:00');
 
-</br>
--- Inserting a tweet with more hexadecimal data
+
 </br>
 INSERT INTO car.tweet (tweet_message_id, tweeter_account_id, content, publish_dtm)
 VALUES ('tweet014', '@thomassbright', E'\\x48657861646563696d616c20646174612069732068657821', '2023-08-04 12:00:00');
 
-</br>
--- Searching for encoded data (Hexadecimal) in content
+
 </br>
 SELECT tweet_message_id, tweeter_account_id, content
 FROM   car.tweet
@@ -2643,25 +2571,20 @@ p6.31</br>
 </br>
 \x off  
 
-</br>
---Check existing unstructured data in car.tweet 
-</br>SELECT tweet_message_id, content FROM car.tweet;
 
 </br>
---check existing structured data in car.product
+SELECT tweet_message_id, content FROM car.tweet;
+
+
 </br>
 SELECT product_name FROM car.product;
 
-</br>
---Clear old tweet_comment 
+
 </br>
 TRUNCATE car.tweet_comment;
 
 </br>
---Ok, let create insights in semi-structured data type by blending unstructured data
-</br>
---with structured data
-</br>INSERT INTO car.tweet_comment (comment_id, comment_dtm, comment, tweet_message_id)
+INSERT INTO car.tweet_comment (comment_id, comment_dtm, comment, tweet_message_id)
 
 </br>
 SELECT
@@ -2674,18 +2597,15 @@ JOIN car.product AS product
 ON   tweet.content ILIKE '%' || product.product_name || '%';
 
 </br>
---set on expanded display 
-</br>
 \x on
 
-</br>
---get the semi-structured data
 </br>
 SELECT * FROM car.tweet_comment;
 
 </br></br>
 
 p6.32</br>
+
 \d space.space_travel_schedule
 
 </br>
@@ -2777,7 +2697,7 @@ LIMIT 1;
 </br></br>
 
 p6.34</br>
---connect to database about_x
+
 </br>
 \c about_x
 
@@ -2842,7 +2762,7 @@ p7.</br>
 </br>
 
 p7.1</br>
---Insert sample data – a new customer
+
 </br>
 INSERT INTO car.customer (
  customer_id, title, first_name, middle_name, last_name, email, phone, address_1,  address_2, address_3, address_4,city, country, postal_code, 
@@ -2851,8 +2771,7 @@ VALUES (
  'C230000002', 'Mr.', 'David', 'M', 'Lee', 'david@davidtest.com', '+01-98765432', 
  'Unit 33, Eight Street', NULL, NULL, NULL, 'Los Angeles', 'USA', '934567', '@davidmlee');
 
-</br>
---Insert sample data – a new space trip booking
+
 </br>INSERT INTO space.space_trip (trip_id, customer_id, fee, amount_paid)
 VALUES ('S000000002', 'C230000002', '1,000,000.00', '1,00,000.00');
 
@@ -2863,8 +2782,6 @@ SELECT trip_id, customer_id, fee FROM space.space_trip;
 SELECT order_no, customer_id, order_net_total FROM car.order_header;
 
 </br>
---Inner Join
-</br>
 SELECT st.trip_id, st.fee AS trip_amount,
        c.customer_id,
        oh.order_no AS car_order_id, oh.order_net_total AS car_order_amount
@@ -2872,8 +2789,7 @@ FROM  space.space_trip st
 INNER JOIN car.customer c ON st.customer_id = c.customer_id
 INNER JOIN car.order_header oh ON c.customer_id = oh.customer_id;
 
-</br>
---Inner join, try again 
+
 </br>
 SELECT st.trip_id, st.fee AS trip_amount,
        c.customer_id,
@@ -2885,7 +2801,7 @@ JOIN car.order_header oh ON c.customer_id = oh.customer_id;
 </br></br>
 
 p7.2</br>
---Full Outer Join
+
 </br>
 SELECT st.trip_id, st.fee AS trip_amount,
        c.customer_id,
@@ -2894,8 +2810,6 @@ FROM  space.space_trip st
 FULL OUTER JOIN car.customer c ON st.customer_id = c.customer_id
 FULL OUTER JOIN car.order_header oh ON c.customer_id = oh.customer_id;
 
-</br>
---Full Outer Join – improved version
 </br>
 SELECT 
     CASE
@@ -2922,7 +2836,7 @@ FULL OUTER JOIN car.order_header oh ON c.customer_id = oh.customer_id;
 </br></br>
 
 p7.3</br>
---Left Outer Join 
+
 </br>
 SELECT 
     CASE
@@ -3005,8 +2919,6 @@ LEFT JOIN car_order_amounts coa ON c.customer_id = coa.customer_id
 ORDER BY  c.customer_id;
 
 </br>
---Try again- use RIGHT JOIN
-</br>
 WITH 
 trip_amounts AS (
     SELECT    st.customer_id,
@@ -3056,7 +2968,6 @@ FROM order_accumulation
 ORDER BY order_date;
 
 </br>
---Below is the order detail
 SELECT oh.order_dtm, od.amount, od.qty 
 FROM car.order_detail od 
 JOIN car.order_header oh ON od.order_no = oh.order_no order by oh.order_dtm;
@@ -3064,12 +2975,10 @@ JOIN car.order_header oh ON od.order_no = oh.order_no order by oh.order_dtm;
 </br></br>
 
 p7.6</br>
---Understand the data - product
+
 </br>
 SELECT COUNT(1) FROM car.product;
 
-</br>
---Understand the data – category
 </br>
 SELECT COUNT(1) FROM car.category;
 
@@ -3083,8 +2992,6 @@ SELECT c.category_id, c.description, p.product_id, p.product_name
 FROM car.category c
 FULL OUTER JOIN car.product p ON c.category_id = p.category_id;
 
-</br>
--- Insert sample data
 </br>
 INSERT INTO car.category (category_id, description)
 VALUES ('CT000006', 'Extra Battery');
@@ -3110,7 +3017,7 @@ INNER JOIN car.category_designer cd2 ON cd1.category_id = cd2.category_id AND
 </br></br>
 
 p8.</br>
---Sample SQL
+
 </br>
 WITH 
 trip_amounts AS (
@@ -3144,7 +3051,7 @@ ORDER BY  c.customer_id;
 </br></br>
 
 p8.1</br>
---Analyze this query, using EXPLAIN
+
 </br>
 EXPLAIN
 WITH 
@@ -3179,7 +3086,7 @@ ORDER BY  c.customer_id;
 </br></br>
 
 p8.2</br>
---Analyze this query, using EXPLAIN
+
 </br>
 EXPLAIN ANALYSE
 WITH 
@@ -3214,7 +3121,7 @@ ORDER BY  c.customer_id;
 </br></br>
 
 p8.3</br>
---Query 1:
+
 </br>
 EXPLAIN ANALYSE
 SELECT
@@ -3227,8 +3134,6 @@ LEFT JOIN car.order_header oh ON c.customer_id = oh.customer_id
 GROUP BY c.customer_id
 ORDER BY c.customer_id;
 
-</br>
---Query 2:
 </br>
 EXPLAIN ANALYSE
 WITH 
@@ -3266,7 +3171,7 @@ WHERE
 </br></br>
 
 p8.5</br>
---Create 1.2 million sample data in few minutes
+ 
 </br>
 INSERT INTO car.tweet (
     tweet_message_id, tweeter_account_id, content, publish_dtm, image, video, url)
@@ -3281,8 +3186,6 @@ SELECT
 FROM GENERATE_SERIES (1, 1200000);
 
 </br>
--- Enable parallel query and increase the number of parallel workers, and analyze it
-</br>
 SET max_parallel_workers = 4;  -- Adjust the number as needed
 
 </br>
@@ -3296,12 +3199,8 @@ WHERE publish_dtm >= '2023-01-01'::timestamp
 ORDER BY publish_dtm;
 
 </br>
---Drop an index to see the execution plan without index
-</br>
 DROP INDEX car.tweet_idx_02;
 
-</br>
---Try again
 </br>
 SET max_parallel_workers = 4;  -- Adjust the number as needed
 </br>
@@ -3314,8 +3213,6 @@ FROM car.tweet
 WHERE publish_dtm >= '2023-09-10 15:25:46.329222'::timestamp
 ORDER BY publish_dtm;
 
-</br>
---Rebuild the index to see the execution plan improved
 </br>
 CREATE INDEX CONCURRENTLY tweet_idx_02 ON car.tweet (publish_dtm, tweet_message_id, tweeter_account_id);
 
@@ -3335,7 +3232,7 @@ ORDER BY publish_dtm;
 </br></br>
 
 p8.6</br>
--- Create a materialized view to store the total order amount for each customer
+
 </br>
 CREATE MATERIALIZED VIEW customer_total_order_amount AS
 SELECT c.customer_id, SUM(oh.order_net_total::numeric) AS total_order_amount
@@ -3344,19 +3241,15 @@ JOIN car.order_header oh ON c.customer_id = oh.customer_id
 GROUP BY c.customer_id;
 
 </br>
--- Refresh the materialized view to update its data (you can schedule this as needed)
-</br>
 REFRESH MATERIALIZED VIEW customer_total_order_amount;
 
-</br>
--- Query the materialized view to get total order amounts for customers
 </br>
 SELECT * FROM customer_total_order_amount;
 
 </br></br>
 
 p8.7</br>
--- Using IN subquery to find customers who have placed orders
+
 </br>
 SELECT c.customer_id, c.first_name, c.last_name
 FROM car.customer c
@@ -3365,8 +3258,6 @@ WHERE c.customer_id IN (
     FROM car.order_header oh
 );
 
-</br>
--- Using EXISTS subquery to find customers who have placed orders
 </br>
 SELECT c.customer_id, c.first_name, c.last_name
 FROM car.customer c
@@ -3382,12 +3273,8 @@ p8.8</br>
 \d car.tweet
 
 </br>
---How to reindex all indexes of a table.  Note: This will lock the table
-</br>
 REINDEX TABLE car.tweet;
 
-</br>
---Reindex a specific index and use CONCURRENTLY.  Note: This will NOT lock the table
 </br>
 REINDEX INDEX CONCURRENTLY car.tweet_idx_02;
 
@@ -3398,20 +3285,12 @@ p8.9</br>
 \c about_x
 
 </br>
--- Start Transaction A
-</br>
 BEGIN;
 
-</br>
--- Attempt to update customer C00000001
 </br>
 UPDATE car.customer
 SET first_name = 'NewFirstNameA'
 WHERE customer_id = 'C00000001';
-
-</br>
--- Pause Transaction A (do not commit)
-</br>
 
 </br></br>
 
@@ -3420,18 +3299,13 @@ WHERE customer_id = 'C00000001';
 \c about_x
 
 </br>
--- Start Transaction B
-</br>
 BEGIN;
 
 </br>
--- Attempt to update customer C00000002
 UPDATE car.customer
 SET first_name = 'NewFirstNameB'
 WHERE customer_id = 'C00000002';
 
-</br>
--- Pause Transaction B (do not commit)
 </br>
 
 </br></br>
@@ -3440,8 +3314,6 @@ WHERE customer_id = 'C00000002';
 </br>
 \c about_x
 
-</br>
---Deadlock Detection
 </br>
 SELECT blocked.query AS blocked_query, waiting.query AS blocking_query
 FROM pg_stat_activity AS blocked
@@ -3449,22 +3321,14 @@ JOIN pg_stat_activity AS waiting ON waiting.pid = blocked.pid
 WHERE blocked.query <> '<IDLE>' AND waiting.query <> '<IDLE>';
 
 </br></br>
---(session 1)
-</br>
 ROLLBACK;
 
 </br></br>
---(session 2) 
-</br>
 ROLLBACK;
 
 </br></br>
---(seesion 3)
-</br>
 \c about_x
 
-</br>
---Deadlock Detection
 </br>
 SELECT blocked.query AS blocked_query, waiting.query AS blocking_query
 FROM pg_stat_activity AS blocked
@@ -3480,36 +3344,21 @@ p10.</br>
 \c about_x
 
 </br>
---Configure the data masking
-</br>
 CREATE EXTENSION IF NOT EXISTS anon CASCADE;
   
-</br>
---NOTICE:  installing required extension "pgcrypto"
-</br>
 
-</br>
---Start data masking extension
 </br>
 SELECT anon.start_dynamic_masking();  
 
 </br>
---Create a test account (a role) named test01 who can only get the masked data
-</br>
 CREATE ROLE test01 LOGIN;
 
-</br>
---apply the masking to test01
 </br>
 SECURITY LABEL FOR anon ON ROLE test01 IS 'MASKED'; 
 
 </br>
---Create a sample table
-</br>
 CREATE TABLE info ( name varchar(30), passport_id varchar(15) );
 
-</br>
---Insert 2 sample records into the table
 </br>
 INSERT INTO info VALUES ('Mr. Andrew Big ', 'A123456(1)');
 
@@ -3520,17 +3369,11 @@ INSERT INTO info VALUES ('Miss Beautiful White', 'B234567(2)');
 SELECT name, passport_id FROM info;
 
 </br>
---Set masking
-</br>
 SECURITY LABEL FOR anon ON COLUMN info.passport_id IS 'MASKED WITH FUNCTION anon.partial(passport_id,5,$$***$$,0)';
 
 </br>
---Login psql as user: test01, from command prompt of Linux
-</br>
 psql -U test01 
 
-</br>
---Select the records using standard SELECT SQL
 </br>
 SELECT name, passport_id FROM info;
 
@@ -3538,19 +3381,15 @@ SELECT name, passport_id FROM info;
 psql -U postgres
 
 </br>
---To unmask the secure label for a role:
-</br>
 SECURITY LABEL FOR anon ON ROLE test01 IS NULL;
 
-</br>
---To disable the mask:
 </br>
 SELECT anon.stop_dynamic_masking();
 
 </br></br>
 
 p10.1</br>
---Connect to your database
+
 </br>\c about_x
 
 </br>
@@ -3566,8 +3405,6 @@ SELECT  customer_id, city
 FROM    car.customer
 WHERE   customer_id = $1;
 
-</br>
---Execute the prepared statement with user input
 </br>
 EXECUTE safe_query('105');
 
@@ -3589,17 +3426,11 @@ p10.3</br>
 \c about_x
 
 </br>
---Enable pgcrypto extension in database of about_x
-</br>
 CREATE EXTENSION pgcrypto;
 
 </br>
---Drop the column if it exists
-</br>
 ALTER TABLE car.customer DROP COLUMN IF EXISTS social_security_no;
 
-</br>
---Add the column as bytea
 </br>
 ALTER TABLE car.customer ADD COLUMN social_security_no BYTEA;
 
@@ -3638,12 +3469,10 @@ WHERE social_security_no = HMAC('222222222'::BYTEA, 'MY_SECRET_KEY'::BYTEA, 'sha
 </br></br>
 
 p10.4</br>
---Connect to your database
+
 </br>
 \c about_x
 
-</br>
---Enable pgcrypto extension in database of about_x
 </br>
 CREATE EXTENSION pgcrypto;
 
@@ -3657,8 +3486,7 @@ SELECT customer_id, social_security_no
 FROM car.customer
 WHERE customer_id = 'C230000001';
 
-</br>
--- Decrypt the data
+
 </br>
 SELECT customer_id, 
        PGP_SYM_DECRYPT(social_security_no, 'MY_SECRET_KEY') as social_security_no
@@ -3673,16 +3501,14 @@ p10.5</br>
 </br></br>
 
 p10.6</br>
---Connect to your database
+
 \c about_x
 
-</br>
---Enable pgcrypto extension in database of about_x
+
 </br>
 CREATE EXTENSION pgcrypto;
 
-</br>
---Create a new sample record to car.customer
+
 </br>
 INSERT INTO car.customer (
  customer_id, title, first_name, middle_name, last_name,
@@ -3697,8 +3523,7 @@ VALUES (
  'Los Angeles', 'USA', '9345678',
  '@petertest');
 
-</br>
---Store the Social Security Number which is encrypted 
+
 </br>
 UPDATE car.customer
 SET social_security_no = 
